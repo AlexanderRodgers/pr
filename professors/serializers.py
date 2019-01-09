@@ -14,7 +14,6 @@ class MajorSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 class ReviewSerializer(serializers.ModelSerializer):
-    gpa = serializers.SerializerMethodField(method_name='gpa')
     major = MajorSerializer(source='majors', many=True, required=False)
 
     def create(self, validated_data):
@@ -27,9 +26,28 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('id', 'rating', 'class_grade', 'difficulty', 'class_num', 'major', 'created',
-        'user', 'review', 'year_taken', 'quarter', 'gpa')
+        'user', 'review', 'year_taken', 'quarter')
+
+class ProfessorSerializer(serializers.ModelSerializer):
+    # Review serializer would be read only. If writing is needed
+    # create() and update() methods are required.
+    reviews = ReviewSerializer(source='professors', many=True, required=False)
+    major = MajorSerializer(source='majors', many=True, required=False)
+    gpa = serializers.SerializerMethodField()
+
+    def create(self, validated_data):
+        return Professor.objects.create(**validated_data)
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.major = validated_data.get('major', instance.major)
+        instance.email = validated_data.get('email', instance.email)
+        instance.save()
+        return instance
 
     def get_gpa(self, obj):
+        queryset = Review.objects.filter(professor__first_name=obj.first_name)
         #this is a bad thing to do.
         grade_points = {
             'A+': 4.1,
@@ -47,28 +65,12 @@ class ReviewSerializer(serializers.ModelSerializer):
             'F': 0,
         }
         weightings = []
-        for grade in Review.objects.values('rating'):
-            weightings.push(grade_points[grade])
-        overall_rating = sum(weightings) / (len(weightings) - 1)
-        return overall_rating
-
-class ProfessorSerializer(serializers.ModelSerializer):
-    # Review serializer would be read only. If writing is needed
-    # create() and update() methods are required.
-    reviews = ReviewSerializer(source='professors', many=True, required=False)
-    major = MajorSerializer(source='majors', many=True, required=False)
-
-    def create(self, validated_data):
-        return Professor.objects.create(**validated_data)
-
-    def update(self, instance, validated_data):
-        instance.first_name = validated_data.get('first_name', instance.first_name)
-        instance.last_name = validated_data.get('last_name', instance.last_name)
-        instance.major = validated_data.get('major', instance.major)
-        instance.email = validated_data.get('email', instance.email)
-        instance.save()
-        return instance
+        for review in queryset.values('rating'):
+            weightings.append(grade_points[review['rating']])
+        if len(weightings) != 0:
+            return sum(weightings) / len(weightings)
+        return 0
 
     class Meta:
         model = Professor
-        fields = ('id', 'first_name', 'last_name', 'email', 'major','reviews')
+        fields = ('id', 'first_name', 'last_name', 'email', 'major', 'reviews', 'gpa')

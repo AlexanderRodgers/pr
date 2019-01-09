@@ -31,30 +31,6 @@ class Review(models.Model):
     null=True)
     major = models.ForeignKey(Major, related_name="review_major", on_delete=models.CASCADE, null=True)
 
-    @classmethod
-    def gpa(cls):
-        #this is a bad thing to do.
-        grade_points = {
-            'A+': 4.1,
-            'A': 4.0,
-            'A-': 3.7,
-            'B+': 3.33,
-            'B': 3,
-            'B-': 2.7,
-            'C+': 2.3,
-            'C': 2.0,
-            'C-': 1.7,
-            'D+': 1.3,
-            'D': 1.0,
-            'D-': 0.7,
-            'F': 0,
-        }
-        weightings = []
-        for grade in Review.objects.values('rating'):
-            weightings.push(grade_points[grade])
-        overall_rating = sum(weightings) / (len(weightings) - 1)
-        return overall_rating
-
     class Meta: 
         ordering = ('class_grade',)
     

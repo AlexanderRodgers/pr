@@ -1,5 +1,8 @@
 from bs4 import BeautifulSoup
+from django.utils.text import slugify
+import json
 import requests
+import time
 import re
 
 link = 'https://calpolyratings.com/'
@@ -25,9 +28,9 @@ def scrape_majors():
 def scrape_professors():
     x = 0
     professors = {}
-    while x < 1:
+    while x < 43:
         if x != 0:
-            response = requests.get(link + '?page=' + x, timeout=5)
+            response = requests.get(link + '?page=' + str(x), timeout=5)
         else:
             response = requests.get(link, timeout=5)
         soup = BeautifulSoup(response.content, 'lxml')
@@ -36,10 +39,20 @@ def scrape_professors():
             # I feel dirty doing it like this.
             full_name = prof.contents[2].split(' ')
             print(full_name)
-            print(prof.contents[3].span.contents[1])
-        # for ind, opt in enumerate(soup.find_all('button')):
+            if (full_name[0] == 'Benjamin' and full_name[1] == 'Hoover'):
+                continue
+            major = prof.contents[3].span.contents[1]
+            response = requests.get(api_url + 'majors/' + slugify(major))
+            major_fk = response.json()['id']
+
+            post_data = {
+                'first_name': full_name[0],
+                'last_name': full_name[1],
+                'major': major_fk
+            }
+            r = requests.post(api_url + 'reviews/', data=post_data)
+            print('professor {} added'.format(post_data['first_name']))
         x += 1
             
-
 scrape_professors()
-            
+# scrape_majors()

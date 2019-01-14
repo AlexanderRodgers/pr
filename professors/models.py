@@ -1,10 +1,20 @@
 from django.db import models
 from datetime import date
+from django.utils.text import slugify
+from django.db.models.signals import pre_save
+from professors.utils import slug_generator
 # Create your models here.
 
 class Major(models.Model):
     major = models.CharField(max_length=100)
     abbreviation = models.CharField(max_length=15)
+    slug = models.SlugField(max_length=100, default='')
+
+def slug_save(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slug_generator(instance, instance.major, instance.slug)
+pre_save.connect(slug_save, sender=Major)
+
 
 class Professor(models.Model):
     first_name = models.CharField(max_length=200)

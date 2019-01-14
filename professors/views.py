@@ -24,12 +24,37 @@ def professor_list(request):
             professor.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET', 'POST'])
+@api_view(['GET', 'POST', 'DELETE'])
 def major_list(request):
+
     if (request.method == 'GET'):
         majors = Major.objects.all()
         serializer = MajorSerializer(majors, many=True)
         return  Response(serializer.data)
+
+    elif (request.method == 'POST'):
+        serializer = MajorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Resposne(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
+
+    elif (request.method == 'DELETE'):
+        for majors in Major.objects.all():
+            majors.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+@api_view(['GET', 'POST'])
+def major_detail(request, slug):
+    try:
+        major = Major.objects.get(slug=slug)
+    except Major.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if (request.method == 'GET'):
+        serializer = MajorSerializer(major)
+        return Response(serializer.data)
 
     elif (request.method == 'POST'):
         serializer = MajorSerializer(data=request.data)

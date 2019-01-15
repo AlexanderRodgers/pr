@@ -16,8 +16,8 @@
     </v-toolbar>
 
     <v-content>
-      <!-- <Search/>
-      <new-review/> -->
+      <Search/>
+      <!-- <new-review/> -->
       <new-professor/>
       <router-view></router-view>
     </v-content>

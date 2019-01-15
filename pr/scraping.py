@@ -39,12 +39,11 @@ def scrape_professors():
             # I feel dirty doing it like this.
             full_name = prof.contents[2].split(' ')
             print(full_name)
-            if (full_name[0] == 'Benjamin' and full_name[1] == 'Hoover'):
-                continue
             major = prof.contents[3].span.contents[1]
+            if major == 'AEPS':
+                major = 'agricultural-and-environmental-plant-sciences'
             response = requests.get(api_url + 'majors/' + slugify(major))
             major_fk = response.json()['id']
-
             post_data = {
                 'first_name': full_name[0],
                 'last_name': full_name[1],

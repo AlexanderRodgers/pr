@@ -1,20 +1,34 @@
 <template>
     <div>
-    <v-text-field
+        <v-autocomplete
             v-model="search"
-            label="Search Your Professor"
+            :items="professors"
+            item-text="first_name"
             append-icon="search"
-            @click:append="runSearch"
-            outline
-        ></v-text-field>
-        </div>
+            @click:append="search"
+        >
+
+        </v-autocomplete>
+
+        <template slot="no-data">
+            <v-list-tile>
+                <v-list-tile-title>
+                    Search for a Professor
+                </v-list-tile-title>
+            </v-list-tile>
+        </template>
+
+    </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
             search: '',
+            dev: 'http://localhost:8000',
+            professors: [],
         }
     },
 
@@ -22,6 +36,16 @@ export default {
         runSearch() {
             console.log('Search function ran.')
         }
+    },
+
+    mounted() {
+        axios.get(this.dev + '/api/reviews/')
+            .then(res => {
+                console.log(res)
+                for (let prof of res.data) {
+                    this.professors.push(prof)
+                }
+            })
     }
 }
 </script>

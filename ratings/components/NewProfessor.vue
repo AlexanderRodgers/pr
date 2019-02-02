@@ -71,7 +71,6 @@ export default {
                 hasContent(str) {
                     return !!str || 'Cannot submit an empty value'
                 },
-
                 hasNumber(str) {
                     var re = /^[A-Za-z]+$/
                     if (re.test(str)) {

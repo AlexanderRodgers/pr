@@ -21,11 +21,13 @@
           {{ item.first_name.charAt(0) }}
         </v-list-tile-avatar>
         <v-list-tile-content>
+        <NuxtLink :to="'/professors/'+toSlug(item.first_last)">
           <v-list-tile-title v-text="item.first_last"></v-list-tile-title>
           <v-list-tile-sub-title v-text="item.major"></v-list-tile-sub-title>
+        </NuxtLink>
         </v-list-tile-content>
         <v-list-tile-action>
-          <v-icon>face  </v-icon>
+          <v-icon>face</v-icon>
         </v-list-tile-action>
       </template>
 
@@ -43,6 +45,7 @@
 
 <script>
 import axios from 'axios'
+import slugify from 'slugify'
 export default {
     data() {
         return {
@@ -55,6 +58,12 @@ export default {
     methods: {
         runSearch() {
             console.log('Search function ran.')
+        },
+
+        toSlug(urlString) {
+            return slugify(urlString, {
+                lower: true
+            })
         }
     },
 

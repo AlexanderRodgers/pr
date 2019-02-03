@@ -6,13 +6,14 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     async asyncData({ params }) {
-        try {
-            return {data: params}
-        } catch (e) {
-            error({ message: "you can't do that.", statusCode: 404})
-        }
+    // return {data: params}
+    return axios.get(`http://localhost:8000/api/professors/${params.profile}`)
+        .then((res) => {
+            return { data: res.data}
+        })
     }
 }
 </script>

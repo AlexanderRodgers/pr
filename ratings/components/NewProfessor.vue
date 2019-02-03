@@ -91,7 +91,7 @@ export default {
 
         submit() {
             if(this.dev_mode) {
-                axios.post(this.dev + '/api/reviews/', {
+                axios.post(this.dev + '/api/professors/', {
                     first_name: this.firstName,
                     last_name: this.lastName,
                     email: this.email ? this.email : undefined,

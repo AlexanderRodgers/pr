@@ -37,7 +37,7 @@ def major_list(request):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Resposne(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
 
     elif (request.method == 'DELETE'):
         for majors in Major.objects.all():
@@ -73,7 +73,7 @@ def professor_detail(request, slug):
 
     if (request.method == 'GET'):
         serializer = ProfessorSerializer(professor)
-        return Resposne(serializer.data)
+        return Response(serializer.data)
 
     elif (request.method == 'POST'):
         serializer = ProfessorSerializer(data=request.data)

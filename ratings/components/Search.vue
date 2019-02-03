@@ -68,7 +68,7 @@ export default {
     },
 
     mounted() {
-        axios.get(this.dev + '/api/reviews/')
+        axios.get(this.dev + '/api/professors/')
             .then(res => {
                 for (let prof of res.data) {
                     prof['first_last'] = prof.first_name + " " + prof.last_name

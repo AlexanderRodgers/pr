@@ -21,9 +21,16 @@ class Professor(models.Model):
     last_name = models.CharField(max_length=200)
     email = models.EmailField(null=True)
     major = models.ForeignKey(Major, related_name="majors", on_delete=models.CASCADE, null=True)
+    slug = models.SlugField(max_length=100, default='')
 
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
+
+def slug_professor(sender, instance, *args, **kwargs):
+    if not instance.slug:
+        instance.slug = slug_generator(instance, 
+        instance.first_name + " " + instance.last_name, instance.slug)
+pre_save.connect(slug_professor, sender=Professor)
 
 class Review(models.Model):
     # Needs Min/Max validation

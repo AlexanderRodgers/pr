@@ -26,7 +26,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('id', 'rating', 'class_grade', 'difficulty', 'class_num', 'major', 'created',
-        'user', 'review', 'year_taken', 'quarter')
+        'user', 'review', 'year_taken', 'quarter',)
 
 class ProfessorSerializer(serializers.ModelSerializer):
     # Review serializer would be read only. If writing is needed
@@ -73,4 +73,4 @@ class ProfessorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Professor
-        fields = ('id', 'first_name', 'last_name', 'email', 'major', 'reviews', 'gpa')
+        fields = ('id', 'first_name', 'last_name', 'slug','email', 'major', 'reviews', 'gpa')

@@ -61,4 +61,25 @@ def major_detail(request, slug):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Resposne(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['GET', 'POST'])
+def professor_detail(request, slug):
+    try:
+        professor = Professor.objects.get(slug=slug)
+    except Professor.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if (request.method == 'GET'):
+        serializer = ProfessorSerializer(professor)
+        return Resposne(serializer.data)
+
+    elif (request.method == 'POST'):
+        serializer = ProfessorSerializer(data=request.data)
+        if serilzer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>DYNAMIC</h1>
-        <h2>{{data}}</h2>
+        <h1>{{data.first_name + " " + data.last_name}}</h1>
+        <h3>{{data}}</h3>
     </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
     // return {data: params}
     return axios.get(`http://localhost:8000/api/professors/${params.profile}`)
         .then((res) => {
-            return { data: res.data}
+            return { data: res.data }
         })
     }
 }
@@ -21,3 +21,4 @@ export default {
 <style>
 
 </style>
+   

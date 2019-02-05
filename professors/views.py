@@ -82,4 +82,8 @@ def professor_detail(request, slug):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+# @api_view(['GET', 'POST'])
+# def review_detail(request, professor):
+    
     

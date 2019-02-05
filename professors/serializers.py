@@ -29,8 +29,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         'user', 'review', 'year_taken', 'quarter',)
 
 class ProfessorSerializer(serializers.ModelSerializer):
-    # Review serializer would be read only. If writing is needed
-    # create() and update() methods are required.
     reviews = ReviewSerializer(source='professors', many=True, required=False)
     major = MajorSerializer(source='majors', many=True, required=False)
     gpa = serializers.SerializerMethodField()
@@ -69,7 +67,7 @@ class ProfessorSerializer(serializers.ModelSerializer):
             weightings.append(grade_points[review['rating']])
         if len(weightings) != 0:
             return sum(weightings) / len(weightings)
-        return 0
+        return -1
 
     class Meta:
         model = Professor

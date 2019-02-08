@@ -2,7 +2,6 @@
   <v-app>
     <v-toolbar
       class="primary"
-      :clipped-left="clipped"
       fixed
       app
     >
@@ -14,7 +13,6 @@
       </v-container>
     </v-content>
     <v-footer
-      :fixed="fixed"
       app
     >
       <span>Alex Rodgers &copy; 2019</span>

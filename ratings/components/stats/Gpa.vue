@@ -4,7 +4,7 @@
          <div class="sm6 sx6 flex">
             <div class="layout column ma-0 justify-center align-center"
                :style="{ color: color }">
-               <h1>{{ gpa }}</h1>
+               <h1><b>{{ gpa }}</b></h1>
             </div>
          </div>
          <div class="sm6 xs6 flex text-sm-center py-3 white--text" :class="color">

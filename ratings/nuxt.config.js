@@ -71,6 +71,17 @@ module.exports = {
         import: ["~assets/style/variables.styl"]
       }
     },
+
+    generate: {
+      routes: function () {
+        axios.get('http://localhost:8000/api/professors/')
+        .then(res => {
+          const routes = res.data.map((professor) => {
+            return '/professors/' + professor.slug
+          })
+        })
+      }
+    },
     
     /*
     ** You can extend webpack config here

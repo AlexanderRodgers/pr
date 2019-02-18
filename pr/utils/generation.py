@@ -1,3 +1,5 @@
+import importlib
+importlib.import_module()
 import random
 import globals
 import requests

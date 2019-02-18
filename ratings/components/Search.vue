@@ -14,6 +14,7 @@
         slot="item"
         slot-scope="{ item, tile }"
       >
+      <a :href="'/professors/'+toSlug(item.first_last)"></a>
         <v-list-tile-avatar
           color="indigo"
           class="headline font-weight-light white--text"
@@ -21,10 +22,8 @@
           {{ item.first_name.charAt(0) }}
         </v-list-tile-avatar>
         <v-list-tile-content>
-        <NuxtLink :to="'/professors/'+toSlug(item.first_last)">
           <v-list-tile-title v-text="item.first_last"></v-list-tile-title>
           <v-list-tile-sub-title v-text="item.major"></v-list-tile-sub-title>
-        </NuxtLink>
         </v-list-tile-content>
         <v-list-tile-action>
           <v-icon>face</v-icon>

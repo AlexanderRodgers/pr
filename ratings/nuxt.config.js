@@ -77,7 +77,10 @@ module.exports = {
         axios.get('http://localhost:8000/api/professors/')
         .then(res => {
           const routes = res.data.map((professor) => {
-            return '/professors/' + professor.slug
+            return {
+              route: '/professors/' + professor.slug,
+              payload: professor
+            }
           })
         })
       }

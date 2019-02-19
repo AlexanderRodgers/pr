@@ -1,7 +1,7 @@
 <template>
     <div>
-        <h1>{{data.first_name + " " + data.last_name}}</h1>
-        <h3>{{data}}</h3>
+        <h1>{{ data.first_name + " " + data.last_name }}</h1>
+        <h3>{{ data }}</h3>
         <!-- <v-layout justify-center column>
             <gpa :gpa="data.gpa"/>
             <num-reviews :numReviews="data.reviews.length"/>
@@ -32,9 +32,9 @@ export default {
         }
     },
 
-    async asyncData({ params }) {
-    // return {data: params}
-    return axios.get(`http://localhost:8000/api/professors/${params.profile}`)
+    async asyncData({ params, error, payload }) {
+        if (payload) return { data: payload }
+        else return axios.get(`http://localhost:8000/api/professors/${params.profile}`)
         .then((res) => {
             return { data: res.data }
         })

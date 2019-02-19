@@ -1,6 +1,6 @@
 <template>
    <v-container>
-      <v-layout align-space-around justify-center row fill-height>
+      <v-layout>
          <v-flex xs12 md3>
             <v-card>
                <v-card-text>
@@ -9,11 +9,10 @@
                   Class Grade: {{ review.class_grade }} <br/>
                   Class Difficulty: {{ review.difficulty }} <br/>
                   {{ translateQuarter(review.quarter) }} {{ review.year_taken.substring(0,4) }} <br/>
-                  
                </v-card-text>
             </v-card>
          </v-flex>
-         <v-flex>
+         <v-flex d-flex>
             <v-card>
                <v-card-text>
                   {{review.review}}

@@ -1,17 +1,22 @@
 <template>
     <div>
         <search/>
-        <new-professor/>
+        <!-- <new-professor/> -->
+        <new-review/>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 import NewProfessor from '~/components/NewProfessor'
 import Search from '~/components/Search'
+import NewReview from '~/components/NewReview'
+
 export default {
     components: {
         Search,
         NewProfessor,
+        NewReview,
     },
 
     data() {
@@ -24,7 +29,6 @@ export default {
     methods: {
         getCode(event) {
             this.keys += event.keyCode;
-            //Flush for efficiency
             if (this.keys.length > 100) {
                 this.keys = ''
             }

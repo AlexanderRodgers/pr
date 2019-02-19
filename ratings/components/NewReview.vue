@@ -7,7 +7,7 @@
                 label="Professor Rating"
                 required
             />
-            <h3>How difficult was the course</h3>
+            <h3>How difficult was the course?</h3>
             <v-select
                 :items="difficulty"
                 label="Difficulty"
@@ -32,6 +32,7 @@
                 <v-flex xs12 sm6 md3 >
                     <v-select
                         :items="major"
+                        item-text="abbreviation"
                         label="Major"
                         required
                     />
@@ -64,6 +65,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
@@ -76,32 +78,33 @@ export default {
             quarter: 0,
             quarterLabel: ['Fall', 'Winter', 'Spring', 'Summer'],
             formRules: {
-                validateClass: function(x) {
+                validateClass(x) {
                     if (x > 99 && x < 700) {
                         return true
                     }
                     return 'Sorry that is not a valid class number'
                 },
 
-                validateYear: function(x) {
+                validateYear(x) {
                     if (x > 1980 && x < (new Date()).getFullYear()) {
                         return true
                     }
                     return 'Sorry that is not a valid date'
                 },
             },
-            major: [
-                'Computer Science', 'Computer Engineering', 'Electrical Engineering'
-            ],
+            major: [],
             yearTaken: '',
             review: '',
         }
     },
 
-    methods: {
-        toggleQuarterButtons(quarter) {
-            // 0 == Fall and numbers increase from there in order of season.   
-        }
+    mounted() {
+        axios.get('http://localhost:8000/api/majors/')
+            .then(res => {
+                for (let major of res.data) {
+                    this.major.push(major)
+                }
+            })
     }
 }
 </script>

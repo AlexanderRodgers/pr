@@ -1,5 +1,5 @@
 # What is PR?
-Pr is a work in progress updated version of Cal Poly's [polyratings](http://polyratings.com) website. This is a project being solely developed by me and is being done completely independently. If you would like to take part in building this website please contact me at alexedrodgers@gmail.com
+Pr is a work in progress updated version of Cal Poly's [polyratings](http://polyratings.com) website. This is a project being solely developed by me and is being done completely independently. If you are a student at Cal Poly and would like to take part in building this website please contact me at aerodger@calpoly.edu
 
 # How can I help?
 The goal of this website has three main objectives.
@@ -20,6 +20,7 @@ That means those with skills in UI/UX design, Database Design/SQL Programming, a
 - [ ] Professor model major information is not being serialized.
 
 # Future Enhancements
+- [ ] Switch database from SQLite to postgreSQL
 - [ ] Add comments to all source code files.
 - [ ] Allow for users to create accounts and add verification weighting to a professor's score.
 - [ ] Data visualization based on key attributes of professor ratings.

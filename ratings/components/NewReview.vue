@@ -81,7 +81,11 @@
 
 <script>
 import axios from 'axios'
+import reviewConstants from '~/mixins/reviewConstants.js'
 export default {
+
+    mixins: [reviewConstants],
+
     props: {
         professor: String,
     },
@@ -89,11 +93,6 @@ export default {
     data() {
         return {
             dialog: false,
-            rating: ['A+', 'A', 'A-', 'B+', 'B', 'B-',
-                    'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
-            classGrade: ['A+', 'A', 'A-', 'B+', 'B', 'B-',
-            'C+', 'C', 'C-', 'D+', 'D', 'D-', 'F'],
-            difficulty: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
             classNum: 0,
             quarter: 0,
             quarterLabel: ['Fall', 'Winter', 'Spring', 'Summer'],

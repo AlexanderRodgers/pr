@@ -43,9 +43,12 @@
 </template>
 
 <script>
-import axios from 'axios'
 import slugify from 'slugify'
+import profs from '~/mixins/profs.js'
 export default {
+
+    mixins: [profs],
+
     data() {
         return {
             search: '',
@@ -65,19 +68,6 @@ export default {
             })
         }
     },
-
-    mounted() {
-        axios.get(this.dev + '/api/professors/')
-            .then(res => {
-                for (let prof of res.data) {
-                    prof['first_last'] = prof.first_name + " " + prof.last_name
-                    this.professors.push(prof)
-                }
-            })
-            .catch(e => {
-                console.error(e)
-            })
-    }
 }
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-    <v-form>
+    <v-form ref="form">
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
         <v-btn slot="activator" color="primary" dark>New Review</v-btn>
             <v-card>
@@ -71,7 +71,7 @@
                     placeholder="John Smith is a wonderful teacher!"
                     counter="10000"/>
                 <v-spacer></v-spacer>
-                <v-btn color="primary">Submit</v-btn>
+                <v-btn color="primary" @click="validate">Submit</v-btn>
             </v-container>
             
             </v-card>
@@ -115,6 +115,15 @@ export default {
             yearTaken: '',
             review: '',
         }
+    },
+
+    methods: {
+        validate() {
+            if (this.$refs.form.validate()) {
+                console.log('Form valid')
+            }
+        }
+
     },
 
     mounted() {

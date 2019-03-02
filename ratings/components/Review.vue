@@ -8,7 +8,7 @@
                   Professor Rating: {{ review.rating}} <br/>
                   Class Grade: {{ review.class_grade }} <br/>
                   Class Difficulty: {{ review.difficulty }} <br/>
-                  {{ translateQuarter(review.quarter) }} <br/>
+                  {{ translateQuarter(review.quarter) }} Quarter<br/>
                </v-card-text>
             </v-card>
          </v-flex>

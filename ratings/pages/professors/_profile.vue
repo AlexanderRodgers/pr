@@ -42,6 +42,10 @@ export default {
         .then((res) => {
             return { data: res.data }
         })
+        .catch(e => {
+            throw new Error("Professor does not exist!");
+            console.error(e)
+        })
     },
 }
 </script>

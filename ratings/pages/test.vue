@@ -2,7 +2,6 @@
     <div>
         <search/>
         <!-- <new-professor/> -->
-        <new-review/>
     </div>
 </template>
 

@@ -34,6 +34,7 @@ class ProfessorSerializer(serializers.ModelSerializer):
     gpa = serializers.SerializerMethodField()
 
     def create(self, validated_data):
+        print(validated_data)
         return Professor.objects.create(**validated_data)
 
     def update(self, instance, validated_data):

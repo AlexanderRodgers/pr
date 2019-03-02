@@ -35,17 +35,19 @@ def scrape_professors():
             response = requests.get(link, timeout=5)
         soup = BeautifulSoup(response.content, 'lxml')
         content = soup.find_all('button', {'class': 'teacher-btn'})
+        done = False
         for prof in content:
             full_name = prof.contents[2].split(' ')
             major = str(prof.contents[3].span.contents[1])
             if major == 'AEPS':
                 major = 'agricultural-and-environmental-plant-sciences'
             response = requests.get(api_url + 'majors/' + slugify(major))
-            major_fk = response.json()['id']
+            major_fk = response.json()
+            print(major_fk)
             post_data = {
                 'first_name': full_name[0],
                 'last_name': full_name[1],
-                'major': major_fk
+                major: major_fk
             }
             r = requests.post(api_url + 'professors/', data=post_data)
             print('professor {} added'.format(post_data['first_name']))

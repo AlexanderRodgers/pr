@@ -9,6 +9,7 @@ from professors.validators import difficulty, class_num, quarter, grade_system
 class Major(models.Model):
     major = models.CharField(max_length=100)
     abbreviation = models.CharField(max_length=15)
+
     slug = models.SlugField(max_length=100, default='')
 
     def __str__(self):
@@ -24,7 +25,7 @@ class Professor(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField(null=True)
-    major = models.ForeignKey(Major, related_name="majors", on_delete=models.CASCADE, null=True)
+    major = models.ForeignKey(Major, related_name="majors", on_delete=models.CASCADE)
     slug = models.SlugField(max_length=100, default='')
 
     def __str__(self):

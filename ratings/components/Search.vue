@@ -1,5 +1,6 @@
 <template>
     <div>
+        <!-- The autocomplete component is giving me weird effects when a user tries deleting their search. -->
         <v-autocomplete
             v-model="search"
             :items="professors"
@@ -7,14 +8,16 @@
             append-icon="search"
             item-text="first_last"
             item-value="id"
-            @click:append="search"
+            :rules="[searchValid(search)]"
+            @click:append="runSearch(search)"
+            @keyup.enter="runSearch(search)"
         >
 
         <template
         slot="item"
-        slot-scope="{ item, tile }"
+        slot-scope="{ item }"
       >
-      <a :href="'/professors/'+toSlug(item.first_last)"></a>
+      <a :href="'/professors/'+item.id"></a>
         <v-list-tile-avatar
           color="indigo"
           class="headline font-weight-light white--text"
@@ -58,15 +61,22 @@ export default {
     },
 
     methods: {
-        runSearch() {
-            console.log('Search function ran.')
+
+        searchValid(search) {
+            var isProfessor = function(profs) {
+                return search === profs.id
+            }
+            return this.professors.some(isProfessor)
+                ? true
+                : "That professor doesn't exist"
         },
 
-        toSlug(urlString) {
-            return slugify(urlString, {
-                lower: true
-            })
-        }
+        runSearch(search) {
+            if(search) {
+                this.$router.push('/professors/' + search)  
+            }
+            
+        },
     },
 }
 </script>

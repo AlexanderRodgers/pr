@@ -5,7 +5,7 @@
       fixed
       app
     >
-      <v-toolbar-title>Poly<b>Ratings</b></v-toolbar-title>
+      <v-toolbar-title class="white--text">Poly<b>Ratings</b></v-toolbar-title>
     </v-toolbar>
     <v-content>
       <v-container>

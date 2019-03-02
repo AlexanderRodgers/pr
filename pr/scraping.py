@@ -49,7 +49,7 @@ def scrape_professors():
                 'last_name': full_name[1],
                 'major': major_fk
             }
-            r = requests.post(api_url + 'reviews/', data=post_data)
+            r = requests.post(api_url + 'professors/', data=post_data)
             print('professor {} added'.format(post_data['first_name']))
         x += 1
             

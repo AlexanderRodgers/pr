@@ -26,7 +26,7 @@ class ReviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Review
         fields = ('id', 'rating', 'class_grade', 'difficulty', 'class_num', 'major', 'created',
-        'user', 'review', 'year_taken', 'quarter',)
+        'user', 'review', 'quarter',)
 
 class ProfessorSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(source='professors', many=True, required=False)

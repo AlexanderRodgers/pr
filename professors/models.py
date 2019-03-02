@@ -10,6 +10,9 @@ class Major(models.Model):
     abbreviation = models.CharField(max_length=15)
     slug = models.SlugField(max_length=100, default='')
 
+    def __str__(self):
+        return "%s" % (self.major)
+
 def slug_save(sender, instance, *args, **kwargs):
     if not instance.slug:
         instance.slug = slug_generator(instance, instance.major, instance.slug)
@@ -39,10 +42,10 @@ class Review(models.Model):
     difficulty = models.IntegerField()
     class_num = models.IntegerField()
     major = models.CharField(max_length=50)
-    created = models.DateTimeField(auto_now_add=True)
-    user = models.CharField(max_length=200)
+    created = models.DateField(auto_now_add=True)
+    user = models.CharField(max_length=200, default="Anonymous")
     review = models.CharField(max_length=10000)
-    year_taken = models.DateField(null=True)
+    # year_taken = models.DateField(null=True)
     quarter = models.IntegerField()
     professor = models.ForeignKey(Professor, related_name="professors", on_delete=models.CASCADE,
     null=True)

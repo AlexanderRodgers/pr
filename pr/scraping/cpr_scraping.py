@@ -1,5 +1,5 @@
 from bs4 import BeautifulSoup
-from django.utils.text import slugify
+from slugify import slugify
 import json
 import requests
 import time
@@ -36,10 +36,8 @@ def scrape_professors():
         soup = BeautifulSoup(response.content, 'lxml')
         content = soup.find_all('button', {'class': 'teacher-btn'})
         for prof in content:
-            # I feel dirty doing it like this.
             full_name = prof.contents[2].split(' ')
-            print(full_name)
-            major = prof.contents[3].span.contents[1]
+            major = str(prof.contents[3].span.contents[1])
             if major == 'AEPS':
                 major = 'agricultural-and-environmental-plant-sciences'
             response = requests.get(api_url + 'majors/' + slugify(major))

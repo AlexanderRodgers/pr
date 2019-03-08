@@ -14,7 +14,7 @@ class MajorSerializer(serializers.ModelSerializer):
         fields = ('__all__')
 
 class ReviewSerializer(serializers.ModelSerializer):
-    major = MajorSerializer(source='majors', many=True, required=False)
+    major = serializers.PrimaryKeyRelatedField(required=False, read_only=True)
 
     def create(self, validated_data):
         return Review.objects.create(**validated_data)
@@ -30,7 +30,7 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class ProfessorSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(source='professors', many=True, required=False)
-    major = MajorSerializer(source='majors', many=True, required=False)
+    major = serializers.PrimaryKeyRelatedField(many=True, required=False, read_only=True)
     gpa = serializers.SerializerMethodField()
 
     def create(self, validated_data):

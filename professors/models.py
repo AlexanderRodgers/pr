@@ -4,12 +4,10 @@ from django.utils.text import slugify
 from django.db.models.signals import pre_save
 from professors.utils import slug_generator
 from professors.validators import difficulty, class_num, quarter, grade_system
-# Create your models here.
 
 class Major(models.Model):
     major = models.CharField(max_length=100)
     abbreviation = models.CharField(max_length=15)
-
     slug = models.SlugField(max_length=100, default='')
 
     def __str__(self):
@@ -20,12 +18,11 @@ def slug_save(sender, instance, *args, **kwargs):
         instance.slug = slug_generator(instance, instance.major, instance.slug)
 pre_save.connect(slug_save, sender=Major)
 
-
 class Professor(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField(null=True)
-    major = models.ForeignKey(Major, related_name="majors", on_delete=models.CASCADE)
+    major = models.ForeignKey(Major, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=100, default='')
 
     def __str__(self):
@@ -50,7 +47,7 @@ class Review(models.Model):
     quarter = models.IntegerField(validators=[quarter])
     professor = models.ForeignKey(Professor, related_name="professors", on_delete=models.CASCADE,
     null=True)
-    major = models.ForeignKey(Major, related_name="review_major", on_delete=models.CASCADE, null=True)
+    major = models.ForeignKey(Major, on_delete=models.CASCADE, null=True)
 
     class Meta: 
         ordering = ('class_grade',)

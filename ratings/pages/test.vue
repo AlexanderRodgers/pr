@@ -43,9 +43,6 @@ export default {
     },
 
     mounted() {
-        window.addEventListener("keypress", e => {
-            this.getCode
-        });
         window.addEventListener("keyup", e => {
             this.getCode(e)
         });

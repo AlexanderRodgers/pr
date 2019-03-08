@@ -8,6 +8,14 @@ import re
 link = 'https://calpolyratings.com/'
 api_url = 'http://localhost:8000/api/'
 
+def get_num_pages():
+    response = requests.get(link, timeout=5)
+    if response.status_code == 404:
+        return -1
+    soup = BeautifulSoup(response.content, 'lxml')
+    pages = soup.find('div', 'pagination').p.text.split()
+    return int(pages[2])
+
 def scrape_majors():
     response = requests.get(link, timeout=5)
     soup = BeautifulSoup(response.content, 'lxml')
@@ -26,9 +34,10 @@ def scrape_majors():
                 data={'major': major, 'abbreviation': abbv})
 
 def scrape_professors():
+    page_limit = get_num_pages() + 1
     x = 0
     professors = {}
-    while x < 43:
+    while x < page_limit:
         if x != 0:
             response = requests.get(link + '?page=' + str(x), timeout=5)
         else:
@@ -53,5 +62,6 @@ def scrape_professors():
             print('professor {} added'.format(post_data['first_name']))
         x += 1
             
-scrape_professors()
+# scrape_professors()
 # scrape_majors()
+print(get_num_pages())

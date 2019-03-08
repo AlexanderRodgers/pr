@@ -1,6 +1,9 @@
 # What is PR?
 Pr is a work in progress updated version of Cal Poly's [polyratings](http://polyratings.com) website. This is a project being solely developed by me and is being done completely independently. If you are a student at Cal Poly and would like to take part in building this website please contact me at aerodger@calpoly.edu
 
+# SETUP
+Instructions on how to deploy the file are in pr and ratings folders.
+
 # How can I help?
 The goal of this website has three main objectives.
 1.  Replace the old and outdated polyratings site.
@@ -13,14 +16,16 @@ That means those with skills in UI/UX design, Database Design/SQL Programming, a
 
 ### Frontend
 - [ ] NewProfessor component form rules do not provide validation when they should in some edge cases.
-- [ ] Search component does not redirect user on click after user has selected a professor.
+- [X] Search component does not redirect user on click after user has selected a professor.
 
 ### Backend
-- [ ] Review model "created" attribute contains more information than necessary (only need YYYY-MM-DD).
-- [ ] Professor model major information is not being serialized.
+- [X] Review model "created" attribute contains more information than necessary (only need YYYY-MM-DD).
+- [X] Professor model major information is not being serialized.
 
 # Future Enhancements
-- [ ] Switch database from SQLite to postgreSQL
+- [ ] Need to add error handling when a user enters in an invalid URL.
+- [ ] Add cross review site sync.
+- [ ] Switch database from SQLite to postgreSQL.
 - [ ] Add comments to all source code files.
 - [ ] Allow for users to create accounts and add verification weighting to a professor's score.
 - [ ] Data visualization based on key attributes of professor ratings.

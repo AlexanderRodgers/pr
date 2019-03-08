@@ -1,13 +1,13 @@
 <template>
-    <div>
+    <div fluid>
         <!-- The autocomplete component is giving me weird effects when a user tries deleting their search. -->
         <v-autocomplete
-            v-model="search"
             :items="professors"
             placeholder="Search for a Professor"
             append-icon="search"
             item-text="first_last"
             item-value="id"
+						:search-input.sync="search"
             :rules="[searchValid(search)]"
             @click:append="runSearch(search)"
             @keyup.enter="runSearch(search)"
@@ -19,13 +19,24 @@
       >
       <a :href="'/professors/'+item.id"></a>
         <v-list-tile-avatar
-          color="indigo"
-          class="headline font-weight-light white--text"
+        	v-if="item.gpa !== -1"
+          :color=colorIcon(item)
+          class="font-weight-light white--text avatar"
         >
-          {{ item.first_name.charAt(0) }}
+          {{ item.gpa.toFixed(1) }}
         </v-list-tile-avatar>
+
+				<v-list-tile-avatar
+        	v-else
+          color="blue-grey darken-1"
+          class="font-weight-light white--text avatar"
+        >
+          N/A
+        </v-list-tile-avatar>
+
         <v-list-tile-content>
           <v-list-tile-title v-text="item.first_last"></v-list-tile-title>
+          <!-- TODO: When I fix the major reference issue, make sure this subtitle works.  -->
           <v-list-tile-sub-title v-text="item.major"></v-list-tile-sub-title>
         </v-list-tile-content>
         <v-list-tile-action>
@@ -56,13 +67,27 @@ export default {
         return {
             search: '',
             dev: 'http://localhost:8000',
-            professors: [],
         }
     },
 
     methods: {
+        colorIcon(profObj) {
+            if(profObj.gpa === -1) {
+							return "neutral"
+						}
+						else if(profObj.gpa > 3.0) {
+							return "positive"
+						}
+						else if(profObj.gpa > 2.0) {
+							return "warning"
+						}
+						else {
+							return "bad"
+						}
+        },
 
         searchValid(search) {
+					console.log(search)
             var isProfessor = function(profs) {
                 return search === profs.id
             }
@@ -81,6 +106,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.list__tile .avatar {
+	font-weight: 900;
+}
 
 </style>

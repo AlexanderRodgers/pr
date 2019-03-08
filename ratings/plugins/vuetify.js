@@ -5,7 +5,11 @@ import colors from 'vuetify/es5/util/colors'
 Vue.use(Vuetify, {
   theme: {
     primary: '#035642',
-    secondary: '#EAAB00'
+    secondary: '#EAAB00',
+    positive: '#2E7D32', //'green darken-3'
+    warning: '#FFEA00', // 'yellow accent-3'
+    bad: '#B71C1C', // red darken-4
+    neutral: '#546E7A', //blue-gray darken-1
   },
 })
 

@@ -5,7 +5,9 @@
       fixed
       app
     >
-      <v-toolbar-title class="white--text">Poly<b>Ratings</b></v-toolbar-title>
+      <nuxt-link to="/">
+        <v-toolbar-title class="white--text">Poly<b>Ratings</b></v-toolbar-title>
+      </nuxt-link>
     </v-toolbar>
     <v-content>
       <v-container>

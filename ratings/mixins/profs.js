@@ -1,6 +1,12 @@
 import axios from 'axios'
 
 export default {
+    data() {
+        return {
+            professors: [],
+        }
+    },
+
    mounted() {
       axios.get('http://localhost:8000/api/professors/')
           .then(res => {

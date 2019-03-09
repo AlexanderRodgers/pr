@@ -94,7 +94,11 @@ export default {
         },
 
         submit() {
+            console.log(this.major)
             if(this.dev_mode) {
+                if(!this.email.includes('@calpoly.edu')) {
+                    this.email += '@calpoly.edu'
+                }
                 axios.post(this.dev + '/api/professors/', {
                     first_name: this.firstName,
                     last_name: this.lastName,
@@ -106,6 +110,9 @@ export default {
                     console.log(e)
                 })
             }
+            this.snackbar = false
+            this.dialog = false
+            this.$emit('validated')
         }
     },
 

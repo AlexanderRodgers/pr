@@ -14,8 +14,10 @@ def professor_list(request):
 
     elif (request.method == 'POST'):
         serializer = ProfessorSerializer(data=request.data)
+        print(request.data)
+        print(serializer)
         if serializer.is_valid():
-            serializer.save()
+            serializer.create(request.data)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
@@ -77,6 +79,7 @@ def professor_detail(request, slug):
 
     elif (request.method == 'POST'):
         serializer = ProfessorSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -84,7 +87,6 @@ def professor_detail(request, slug):
 
 @api_view(['GET', 'POST'])
 def professor_detail_id(request, pk):
-    print(pk)
     try:
         professor = Professor.objects.get(pk=pk)
     except Professor.DoesNotExist:
@@ -96,6 +98,7 @@ def professor_detail_id(request, pk):
 
     elif (request.method == 'POST'):
         serializer = ProfessorSerializer(data=request.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

@@ -33,10 +33,6 @@ class ProfessorSerializer(serializers.ModelSerializer):
     major = serializers.PrimaryKeyRelatedField(many=True, required=False, read_only=True)
     gpa = serializers.SerializerMethodField()
 
-    def create(self, validated_data):
-        print(validated_data)
-        return Professor.objects.create(**validated_data)
-
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
@@ -44,6 +40,9 @@ class ProfessorSerializer(serializers.ModelSerializer):
         instance.email = validated_data.get('email', instance.email)
         instance.save()
         return instance
+
+    def save():
+        pass
 
     def get_gpa(self, obj):
         queryset = Review.objects.filter(professor__first_name=obj.first_name)
@@ -73,3 +72,13 @@ class ProfessorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Professor
         fields = ('id', 'first_name', 'last_name', 'slug','email', 'major', 'reviews', 'gpa')
+
+    def create(self, validated_data):
+        major_id = validated_data['major']
+        del validated_data['major']
+        print('data after del', validated_data)
+        for key in validated_data:
+            print(type(key))
+        major = Major.objects.get(id=major_id)
+        Professor.objects.create(first_name=validated_data['first_name'],
+        last_name=validated_data['last_name'], email=validated_data['email'], major=major)

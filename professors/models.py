@@ -22,7 +22,7 @@ class Professor(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField(null=True)
-    major = models.ForeignKey(Major, on_delete=models.CASCADE)
+    major = models.ForeignKey(Major, null=True, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=100, default='')
 
     def __str__(self):
@@ -43,7 +43,6 @@ class Review(models.Model):
     created = models.DateField(auto_now_add=True)
     user = models.CharField(max_length=200, default="Anonymous")
     review = models.CharField(max_length=10000)
-    # year_taken = models.DateField(null=True)
     quarter = models.IntegerField(validators=[quarter])
     professor = models.ForeignKey(Professor, related_name="professors", on_delete=models.CASCADE,
     null=True)

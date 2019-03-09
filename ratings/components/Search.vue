@@ -67,7 +67,7 @@ export default {
 
     data() {
         return {
-						// professors: [Obj] -> from mixin 
+            // professors: [Obj] -> from mixin 
             search: '',
             dev: 'http://localhost:8000',
         }

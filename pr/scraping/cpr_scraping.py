@@ -13,8 +13,7 @@ def get_num_pages():
     if response.status_code == 404:
         return -1
     soup = BeautifulSoup(response.content, 'lxml')
-    pages = soup.find('div', 'pagination').p.text.split()
-    return int(pages[2])
+    return int(soup.find('div', 'pagination').p.text.split()[2]) 
 
 def scrape_majors():
     response = requests.get(link, timeout=5)

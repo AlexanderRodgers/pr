@@ -17,6 +17,8 @@ That means those with skills in UI/UX design, Database Design/SQL Programming, a
 ### Frontend
 - [ ] NewProfessor component form rules do not provide validation when they should in some edge cases.
 - [X] Search component does not redirect user on click after user has selected a professor.
+- [ ] Search component does not delete the entire search query, it seems to leave a lingering object reference.
+- [ ] Complete all TODO's
 
 ### Backend
 - [X] Review model "created" attribute contains more information than necessary (only need YYYY-MM-DD).

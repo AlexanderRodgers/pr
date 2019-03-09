@@ -1,59 +1,61 @@
 <template>
-    <div fluid>
-        <!-- The autocomplete component is giving me weird effects when a user tries deleting their search. -->
-        <v-autocomplete
-            :items="professors"
-            placeholder="Search for a Professor"
-            append-icon="search"
-            item-text="first_last"
-            item-value="id"
-						:search-input.sync="search"
-            :rules="[searchValid(search)]"
-            @click:append="runSearch(search)"
-            @keyup.enter="runSearch(search)"
-        >
+<v-container fluid fill-height>
+	<v-layout align-center fill-height>
+		<!-- The autocomplete component is giving me weird effects when a user tries deleting their search. -->
+		<v-autocomplete
+				:items="professors"
+				placeholder="Search for a Professor"
+				append-icon="search"
+				item-text="first_last"
+				item-value="id"
+				:search-input.sync="search"
+				:rules="[searchValid(search)]"
+				@click:append="runSearch(search)"
+				@keyup.enter="runSearch(search)"
+		>
 
-        <template
-        slot="item"
-        slot-scope="{ item }"
-      >
-      <a :href="'/professors/'+item.id"></a>
-        <v-list-tile-avatar
-        	v-if="item.gpa !== -1"
-          :color=colorIcon(item)
-          class="font-weight-light white--text avatar"
-        >
-          {{ item.gpa.toFixed(1) }}
-        </v-list-tile-avatar>
+		<template
+		slot="item"
+		slot-scope="{ item }"
+	>
+	<a :href="'/professors/'+item.id"></a>
+		<v-list-tile-avatar
+			v-if="item.gpa !== -1"
+			:color=colorIcon(item)
+			class="font-weight-light white--text avatar"
+		>
+			{{ item.gpa.toFixed(1) }}
+		</v-list-tile-avatar>
 
-				<v-list-tile-avatar
-        	v-else
-          color="blue-grey darken-1"
-          class="font-weight-light white--text avatar"
-        >
-          N/A
-        </v-list-tile-avatar>
+		<v-list-tile-avatar
+			v-else
+			color="blue-grey darken-1"
+			class="font-weight-light white--text avatar"
+		>
+			N/A
+		</v-list-tile-avatar>
 
-        <v-list-tile-content>
-          <v-list-tile-title v-text="item.first_last"></v-list-tile-title>
-          <!-- TODO: When I fix the major reference issue, make sure this subtitle works.  -->
-          <v-list-tile-sub-title v-text="item.major"></v-list-tile-sub-title>
-        </v-list-tile-content>
-        <v-list-tile-action>
-          <v-icon>face</v-icon>
-        </v-list-tile-action>
-      </template>
+		<v-list-tile-content>
+			<v-list-tile-title v-text="item.first_last"></v-list-tile-title>
+			<!-- TODO: When I fix the major reference issue, make sure this subtitle works.  -->
+			<v-list-tile-sub-title v-text="item.major"></v-list-tile-sub-title>
+		</v-list-tile-content>
+		<v-list-tile-action>
+			<v-icon>face</v-icon>
+		</v-list-tile-action>
+	</template>
 
-        </v-autocomplete>
+		</v-autocomplete>
 
-        <template slot="no-data">
-            <v-list-tile>
-                <v-list-tile-title>
-                    Search for a Professor
-                </v-list-tile-title>
-            </v-list-tile>
-        </template>
-    </div>
+		<template slot="no-data">
+				<v-list-tile>
+						<v-list-tile-title>
+								Search for a Professor
+						</v-list-tile-title>
+				</v-list-tile>
+		</template>
+	</v-layout>
+</v-container>
 </template>
 
 <script>
@@ -65,6 +67,7 @@ export default {
 
     data() {
         return {
+						// professors: [Obj] -> from mixin 
             search: '',
             dev: 'http://localhost:8000',
         }
@@ -107,8 +110,5 @@ export default {
 </script>
 
 <style scoped>
-.list__tile .avatar {
-	font-weight: 900;
-}
 
 </style>

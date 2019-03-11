@@ -14,10 +14,9 @@ def professor_list(request):
 
     elif (request.method == 'POST'):
         serializer = ProfessorSerializer(data=request.data)
-        print(request.data)
-        print(serializer)
         if serializer.is_valid():
-            serializer.create(request.data)
+            print('request data', request.data)
+            serializer.create(request.data.copy())
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

@@ -30,8 +30,16 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 class ProfessorSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(source='professors', many=True, required=False)
-    major = serializers.PrimaryKeyRelatedField(many=True, required=False, read_only=True)
+    major = serializers.PrimaryKeyRelatedField(required=False, read_only=True)
     gpa = serializers.SerializerMethodField()
+
+    def create(self, validated_data):
+        major_id = validated_data.pop('major')
+        print(major_id)
+        major = Major.objects.get(id=major_id)
+        print(major)
+        p = Professor.objects.create(major=major, **validated_data)
+        return p
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get('first_name', instance.first_name)
@@ -41,12 +49,9 @@ class ProfessorSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    def save():
-        pass
-
     def get_gpa(self, obj):
+        print(obj)
         queryset = Review.objects.filter(professor__first_name=obj.first_name)
-        #this is a bad thing to do.
         grade_points = {
             'A+': 4.1,
             'A': 4.0,
@@ -73,12 +78,4 @@ class ProfessorSerializer(serializers.ModelSerializer):
         model = Professor
         fields = ('id', 'first_name', 'last_name', 'slug','email', 'major', 'reviews', 'gpa')
 
-    def create(self, validated_data):
-        major_id = validated_data['major']
-        del validated_data['major']
-        print('data after del', validated_data)
-        for key in validated_data:
-            print(type(key))
-        major = Major.objects.get(id=major_id)
-        Professor.objects.create(first_name=validated_data['first_name'],
-        last_name=validated_data['last_name'], email=validated_data['email'], major=major)
+    

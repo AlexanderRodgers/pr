@@ -61,6 +61,6 @@ def scrape_professors():
             print('professor {} added'.format(post_data['first_name']))
         x += 1
             
-# scrape_professors()
+scrape_professors()
 # scrape_majors()
-print(get_num_pages())
+# print(get_num_pages())

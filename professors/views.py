@@ -64,6 +64,24 @@ def major_detail(request, slug):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET', 'POST'])
+def major_detail_pk(request, pk):
+    print('function running')
+    try:
+        major = Major.objects.get(pk=pk)
+    except Major.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if (request.method == 'GET'):
+        serializer = MajorSerializer(major)
+        return Response(serializer.data)
+
+    elif (request.method == 'POST'):
+        serializer = MajorSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST'])
 def professor_detail(request, slug):

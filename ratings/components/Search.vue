@@ -38,7 +38,7 @@
 		<v-list-tile-content>
 			<v-list-tile-title v-text="item.first_last"></v-list-tile-title>
 			<!-- TODO: When I fix the major reference issue, make sure this subtitle works.  -->
-			<v-list-tile-sub-title v-text="item.major"></v-list-tile-sub-title>
+			<v-list-tile-sub-title >{{ getMajor(item.major) }}</v-list-tile-sub-title>
 		</v-list-tile-content>
 		<v-list-tile-action>
 			<v-icon>face</v-icon>
@@ -59,6 +59,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import slugify from 'slugify'
 import profs from '~/mixins/profs.js'
 export default {
@@ -90,7 +91,7 @@ export default {
         },
 
         searchValid(search) {
-					console.log(search)
+			console.log(search)
             var isProfessor = function(profs) {
                 return search === profs.id
             }
@@ -104,7 +105,19 @@ export default {
                 this.$router.push('/professors/' + search)  
             }
             
-        },
+		},
+		
+		getMajor(majorId) {
+			axios.get('http://localhost:8000/api/majors/' + majorId)
+				.then(res => {
+					console.log(res.data.major)
+					return res.data.major
+				})
+				.catch(e => {
+					console.log(e)
+				})
+			
+		}
     },
 }
 </script>

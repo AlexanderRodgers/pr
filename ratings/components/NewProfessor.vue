@@ -135,9 +135,4 @@ export default {
     margin-right: 20px;
     margin-top: 20px;
 }
-
-.v-btn {
-
-}
-
 </style>

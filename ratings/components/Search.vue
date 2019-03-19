@@ -91,7 +91,6 @@ export default {
         },
 
         searchValid(search) {
-			console.log(search)
             var isProfessor = function(profs) {
                 return search === profs.id
             }

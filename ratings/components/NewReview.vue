@@ -17,41 +17,48 @@
                 <h2>{{ professor }}'s Rating</h2>
                 <v-select
                     :items="rating"
+                    v-model="postData.rating"
                     label="Professor Rating"
+                    :rules="[v => !!v || 'This field is required']"
                     required
                 />
                 <h3>How difficult was the course?</h3>
                 <v-select
                     :items="difficulty"
+                    v-model="postData.difficulty"
                     label="Difficulty"
+                    :rules="[v => !!v || 'This field is required']"
                     required
                 />
                 <h3>What grade did you get in the class?</h3>
                 <v-select
                     :items="classGrade"
+                    v-model="postData.class_grade"
                     label="Class Grade"
+                    :rules="[v => !!v || 'This field is required']"
                     required
                 />
                 <v-layout>
                     <v-flex xs12 sm4 md2>
                         <v-text-field
-                            v-model="classNum"
+                            v-model="postData.class_num"
                             label="Class Number"
-                            :rules="[formRules.validateClass(classNum)]"
+                            :rules="[v => !!v || 'This field is required', v => v > 99 && v < 700 || 'Class number is invalid']"
                             mask="###"
                             required
                         />
-                        <v-text-field
+                        <!-- <v-text-field
                             label="Year Taken"
                             v-model="yearTaken"
                             mask="####"
-                            :rules="[formRules.validateYear(yearTaken)]"/>
+                            :rules="[formRules.validateYear(yearTaken)]"/> -->
                     </v-flex>
                     <v-flex xs12 sm6 md3 >
                         <v-select
                             :items="major"
                             item-text="abbreviation"
                             label="Major"
+                            :rules="[v => !!v || 'This field is required']"
                             required
                         />
                     </v-flex>
@@ -65,11 +72,14 @@
                     </v-radio-group>
                 </v-layout>
                 <v-textarea
-                    v-model="review"
+                    v-model="postData.review"
                     auto-grow
                     label="Review"
                     placeholder="John Smith is a wonderful teacher!"
-                    counter="10000"/>
+                    counter="10000"
+                    :rules="[v => !!v || 'This field is required']"
+                    required
+                    />
                 <v-spacer></v-spacer>
                 <v-btn color="primary" @click="validate">Submit</v-btn>
             </v-container>
@@ -93,23 +103,10 @@ export default {
     data() {
         return {
             dialog: false,
+            postData: {},
             classNum: 0,
             quarter: 0,
             quarterLabel: ['Fall', 'Winter', 'Spring', 'Summer'],
-            formRules: {
-                validateClass(x) {
-                    if (x > 99 && x < 700) {
-                        return true
-                    }
-                    return 'Sorry that is not a valid class number'
-                },
-                validateYear(x) {
-                    if (x > 1980 && x < (new Date()).getFullYear()) {
-                        return true
-                    }
-                    return 'Sorry that is not a valid date'
-                },
-            },
             major: [],
             yearTaken: '',
             review: '',
@@ -119,10 +116,14 @@ export default {
     methods: {
         validate() {
             if (this.$refs.form.validate()) {
-                console.log('Form valid')
+                console.log('Review valid')
+                this.submit()
             }
-        }
+        },
 
+        submit() {
+            //TODO: The entire method. Also fill in the v-model values for the rest of the form.
+        }
     },
 
     mounted() {

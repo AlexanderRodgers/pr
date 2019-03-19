@@ -18,14 +18,17 @@ That means those with skills in UI/UX design, Database Design/SQL Programming, a
 - [ ] NewProfessor component form rules do not provide validation when they should in some edge cases.
 - [X] Search component does not redirect user on click after user has selected a professor.
 - [ ] Search component does not delete the entire search query, it seems to leave a lingering object reference.
+- [ ] Search component does not reflect database changes after adding a professor.
+- [ ] Find a way to decrease the number of queries made when typing in the search field.
 - [ ] Complete all TODO's
 
 ### Backend
 - [X] Review model "created" attribute contains more information than necessary (only need YYYY-MM-DD).
 - [X] Professor model major information is not being serialized.
+- [ ] Pinpoint the cause of the OrderedDict error on ProfessorSerializer's gpa serializerMethodField 
 
 # Future Enhancements
-- [ ] Need to add error handling when a user enters in an invalid URL.
+- [X] Need to add error handling when a user enters in an invalid URL.
 - [ ] Add cross review site sync.
 - [ ] Switch database from SQLite to postgreSQL.
 - [ ] Add comments to all source code files.

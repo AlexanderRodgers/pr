@@ -2,7 +2,7 @@
   <div>
     <v-layout row align-center class="flex-container">
       <search fluid class="flex-item"/>
-      <new-professor v-on:validated="updateProfs" class="flex-item"/>
+      <new-professor v-on:validated="updateProfs($event)" class="flex-item"/>
     </v-layout>
     <v-snackbar
       v-model="snackbar"
@@ -10,7 +10,7 @@
       top
       left
     >
-      Post Created Successfully
+      {{ snackbarResponse }}
       <v-btn
         color="pink"
         flat
@@ -38,6 +38,8 @@ export default {
 
   data() {
     return {
+      newPost: {},
+      snackbarResponse: '',
       show: false,
       snackbar: false,
       y: 'top',
@@ -48,18 +50,16 @@ export default {
   },
 
   methods: {
-    updateProfs() {
-      axios.get('http://localhost:8000/api/professors/')
-          .then(res => {
-              let prof = res.data[res.data.length - 1]
-              console.log(prof)
-              prof['first_last'] = prof.first_name + " " + prof.last_name
-              this.professors.unshift(prof)
-          })
-          .then(this.snackbar = true)
-          .catch(e => {
-              console.error(e)
-          })
+    updateProfs(newProf) {
+      // Check if object is empty.
+      if (Object.entries(newProf).length === 0 && newProf.constructor === Object) {
+        this.snackbarResponse = 'Unable to add professor'
+      } else {
+        newProf['first_last'] = newProf.first_name + " " + newProf.last_name
+        this.professors.unshift(newProf)
+        this.snackbarResponse = `Professor ${newProf.last_name} added`
+      }
+      this.snackbar = true
     }
   }
 }

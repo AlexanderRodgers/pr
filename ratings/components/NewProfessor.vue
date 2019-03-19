@@ -99,12 +99,19 @@ export default {
                 if(!this.email.includes('@calpoly.edu')) {
                     this.email += '@calpoly.edu'
                 }
-                axios.post(this.dev + '/api/professors/', {
+                let postData = {
                     first_name: this.firstName,
                     last_name: this.lastName,
                     email: this.email ? this.email : undefined,
                     major: this.major ? this.major : undefined
-                }).then(res => {
+                }
+                axios.post(this.dev + '/api/professors/', postData)
+                .then(res => {
+                    if (res.status === 201) {
+                        this.$emit('validated', postData)
+                    } else if (res.status === 400) {
+                        this.$emit('validated', {})
+                    }
                     console.log(res)
                 }).catch(e => {
                     console.log(e)
@@ -112,7 +119,6 @@ export default {
             }
             this.snackbar = false
             this.dialog = false
-            this.$emit('validated')
         }
     },
 

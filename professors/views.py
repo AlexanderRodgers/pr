@@ -9,7 +9,7 @@ def professor_list(request):
 
     if (request.method == 'GET'):
         professors = Professor.objects.all()
-        serializer = ProfessorSerializer(professors, many=True)
+        serializer = GetProfessorSerializer(professors, many=True)
         return Response(serializer.data)
 
     elif (request.method == 'POST'):
@@ -66,7 +66,6 @@ def major_detail(request, slug):
 
 @api_view(['GET', 'POST'])
 def major_detail_pk(request, pk):
-    print('function running')
     try:
         major = Major.objects.get(pk=pk)
     except Major.DoesNotExist:

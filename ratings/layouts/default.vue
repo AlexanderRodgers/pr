@@ -17,7 +17,7 @@
     <v-footer
       app
     >
-      <span>Alex Rodgers &copy; 2019</span>
+      <span class="text-lg-center">Made in Yosemite with Love <3</span>
     </v-footer>
   </v-app>
 </template>

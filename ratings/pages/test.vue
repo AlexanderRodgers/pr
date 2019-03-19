@@ -31,7 +31,6 @@ export default {
             if (this.keys.length > 100) {
                 this.keys = ''
             }
-            console.log(this.keys)
             this.codeEntered = this.keys.includes('3838404037393739666513')
         }
     },

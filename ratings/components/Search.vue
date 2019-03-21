@@ -62,6 +62,7 @@
 import axios from 'axios'
 import slugify from 'slugify'
 import profs from '~/mixins/profs.js'
+import ProfessorApi from '~/services/api/professors.js'
 export default {
 
     mixins: [profs],
@@ -117,7 +118,7 @@ export default {
 				})
 			
 		}
-    },
+	},
 }
 </script>
 

@@ -15,9 +15,10 @@
       </v-container>
     </v-content>
     <v-footer
+      class="justify-center"
       app
     >
-      <span class="text-lg-center">Made in Yosemite with Love <3</span>
+      <span>Made in Yosemite with Love <3</span>
     </v-footer>
   </v-app>
 </template>

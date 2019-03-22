@@ -18,7 +18,7 @@
       class="justify-center"
       app
     >
-      <span>Made in Yosemite with Love <3</span>
+      <span>Made in Yosemite Tower 1 with Love <3</span>
     </v-footer>
   </v-app>
 </template>

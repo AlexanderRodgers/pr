@@ -8,6 +8,7 @@
 				append-icon="search"
 				item-text="first_last"
 				item-value="id"
+				cache-items
 				:search-input.sync="search"
 				:rules="[searchValid(search)]"
 				@click:append="runSearch(search)"
@@ -38,7 +39,7 @@
 		<v-list-tile-content>
 			<v-list-tile-title v-text="item.first_last"></v-list-tile-title>
 			<!-- TODO: When I fix the major reference issue, make sure this subtitle works.  -->
-			<v-list-tile-sub-title >{{ getMajor(item.major) }}</v-list-tile-sub-title>
+			<v-list-tile-sub-title >{{ item.major_stats.major }}</v-list-tile-sub-title>
 		</v-list-tile-content>
 		<v-list-tile-action>
 			<v-icon>face</v-icon>
@@ -63,17 +64,35 @@ import axios from 'axios'
 import slugify from 'slugify'
 import profs from '~/mixins/profs.js'
 import ProfessorApi from '~/services/api/professors.js'
+import MajorApi from '~/services/api/majors.js'
 export default {
 
-    mixins: [profs],
+    // mixins: [profs],
 
     data() {
         return {
-            // professors: [Obj] -> from mixin 
+			professors: [], 
+			myProfs: [],
             search: '',
             dev: 'http://localhost:8000',
         }
-    },
+	},
+	
+	mounted() {
+		let preCompProfessors = []
+		ProfessorApi.getCompiledProfs()
+			.then(res => {
+				for (let prof of res) {
+					MajorApi.getMajor(prof['major'])
+						.then(res => {
+							prof['major_stats'] = res
+						})
+					preCompProfessors.push(prof)
+				}
+			})
+			.catch(e => console.log(e))
+		this.professors = preCompProfessors
+	},
 
     methods: {
         colorIcon(profObj) {

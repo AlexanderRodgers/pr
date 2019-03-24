@@ -61,7 +61,7 @@
                     </v-flex>
                         <v-radio-group 
                         mandatory
-                        :rules="[v => !!v || 'This field is required']"
+                        :rules="[v => v == 0 || !!v || 'This field is required']"
                         v-model="postData.quarter">
                         <v-radio
                         v-for="(item, index) in quarterLabel"
@@ -102,7 +102,7 @@ export default {
 
     data() {
         return {
-            dev: 'localhost:8000/api/',
+            dev: 'http://localhost:8000/api/',
             dialog: false,
             postData: {},
             classNum: 0,
@@ -124,7 +124,7 @@ export default {
         submit() {
             this.postData['professor'] = this.professor.id
             console.log(this.postData)
-            axios.post(this.dev + 'reviews/', this.postData)
+            axios.post(this.dev + `reviews/${this.professor.id}/`, this.postData)
                 .then(res => {
                     res.status === 201 ? console.log('##### REVIEW VALID #####') : console.log('##### REVIEW INVALID ######')
                 })

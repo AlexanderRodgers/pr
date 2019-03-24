@@ -44,8 +44,7 @@ class Review(models.Model):
     user = models.CharField(max_length=200, default="Anonymous")
     review = models.CharField(max_length=10000)
     quarter = models.IntegerField(validators=[quarter])
-    professor = models.ForeignKey(Professor, related_name="professors", on_delete=models.CASCADE,
-    null=True)
+    professor = models.ForeignKey(Professor, related_name="professors", on_delete=models.CASCADE    )
     major = models.ForeignKey(Major, on_delete=models.CASCADE, null=True)
 
     class Meta: 

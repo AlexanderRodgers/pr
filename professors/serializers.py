@@ -15,18 +15,28 @@ class MajorSerializer(serializers.ModelSerializer):
 
 class ReviewSerializer(serializers.ModelSerializer):
     major = serializers.PrimaryKeyRelatedField(required=False, read_only=True)
+    professor = serializers.PrimaryKeyRelatedField(required=False, read_only=True)
 
     def create(self, validated_data):
-        return Review.objects.create(**validated_data)
+        for key in list(validated_data.keys()):
+            if 'professor' == key:
+                professor_id = validated_data.pop('professor')
+                professor = Professor.objects.get(id=professor_id)
+            if 'major' == key:
+                major_id = validated_data.pop('major')
+                major = Major.objects.get(id=major_id)
+        if major and professor:
+            return Review.objects.create(professor=professor, major=major, **validated_data)
+        else:
+            return Review.objects.create(**validated_data)            
 
-    # DO THIS NEXT
     def update(self, instance, validated_data):
         pass
 
     class Meta:
         model = Review
         fields = ('id', 'rating', 'class_grade', 'difficulty', 'class_num', 'major', 'created',
-        'user', 'review', 'quarter',)
+        'user', 'review', 'quarter', 'professor')
 
 class ProfessorSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(source='professors', many=True, required=False)
@@ -37,13 +47,12 @@ class ProfessorSerializer(serializers.ModelSerializer):
         print('validated data', validated_data)
         if 'major' in validated_data.keys():
             major_id = validated_data.pop('major')
-            print(major_id)
             major = Major.objects.get(id=major_id)
-            print(major)
             p = Professor.objects.create(major=major, **validated_data)
             return p
         else:
             p = Professor.objects.create(**validated_data)
+            return p
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get('first_name', instance.first_name)

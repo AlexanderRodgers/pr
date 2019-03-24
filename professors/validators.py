@@ -9,7 +9,8 @@ def class_num(value):
         raise ValidationError('%s is out of acceptable range of possible values' % value)
 
 def quarter(value):
-    if value < 1 or value > 4:
+    print(type(value))
+    if value < 0 or value > 3:
         raise ValidationError('%s is out of acceptable range of possible values' % value)
 
 def grade_system(value):

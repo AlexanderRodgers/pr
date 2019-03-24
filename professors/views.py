@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from professors.models import *
 from professors.serializers import *
 
+# TODO: Refactor to better use the ViewList library
+
 @api_view(['GET', 'POST', 'DELETE'])
 def professor_list(request):
 
@@ -15,7 +17,6 @@ def professor_list(request):
     elif (request.method == 'POST'):
         serializer = ProfessorSerializer(data=request.data)
         if serializer.is_valid():
-            print('request data', request.data)
             serializer.create(request.data.copy())
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         print('data invalid?')
@@ -121,4 +122,29 @@ def professor_detail_id(request, pk):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    
+@api_view(['GET'])
+def review_list(request):
+
+    if (request.method == 'GET'):
+        reviews = Review.objects.all()
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+@api_view(['GET', 'POST'])
+def professor_review(request, pk):
+    try:
+        reviews = Review.objects.filter(professor__pk=pk)
+    except Review.DoesNotExist:
+        return Response(status=status.HTTP_404_NOT_FOUND)
+
+    if (request.method == 'GET'):
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+
+    elif (request.method == 'POST'):
+        serializer = ReviewSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.create(request.data.copy())
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

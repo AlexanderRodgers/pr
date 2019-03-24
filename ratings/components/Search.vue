@@ -38,7 +38,6 @@
 
 		<v-list-tile-content>
 			<v-list-tile-title v-text="item.first_last"></v-list-tile-title>
-			<!-- TODO: When I fix the major reference issue, make sure this subtitle works.  -->
 			<v-list-tile-sub-title >{{ item.major_stats ? item.major_stats.major : '' }}</v-list-tile-sub-title>
 		</v-list-tile-content>
 		<v-list-tile-action>
@@ -116,7 +115,10 @@ export default {
         searchValid(search) {
             var isProfessor = function(profs) {
                 return search === profs.id
-            }
+			}
+			if(!search || search == null) {
+				return true
+			}
             return this.professors.some(isProfessor)
                 ? true
                 : "That professor doesn't exist"

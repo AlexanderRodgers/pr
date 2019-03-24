@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>{{ data.first_name + " " + data.last_name }}</h1>
-        <new-review :professor="data.first_name + ' ' + data.last_name"/>
+        <new-review :professor="data"/>
         <h3>{{ data }}</h3>
 
         <!-- <v-layout justify-center column>

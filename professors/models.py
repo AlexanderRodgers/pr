@@ -39,7 +39,7 @@ class Review(models.Model):
     class_grade = models.CharField(max_length=2, null=True, validators=[grade_system])
     difficulty = models.IntegerField(validators=[difficulty])
     class_num = models.IntegerField(validators=[class_num])
-    major = models.CharField(max_length=50)
+    # major = models.CharField(max_length=50)
     created = models.DateField(auto_now_add=True)
     user = models.CharField(max_length=200, default="Anonymous")
     review = models.CharField(max_length=10000)

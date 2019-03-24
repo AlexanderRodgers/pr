@@ -39,7 +39,7 @@
 		<v-list-tile-content>
 			<v-list-tile-title v-text="item.first_last"></v-list-tile-title>
 			<!-- TODO: When I fix the major reference issue, make sure this subtitle works.  -->
-			<v-list-tile-sub-title >{{ item.major_stats.major }}</v-list-tile-sub-title>
+			<v-list-tile-sub-title >{{ item.major_stats ? item.major_stats.major : '' }}</v-list-tile-sub-title>
 		</v-list-tile-content>
 		<v-list-tile-action>
 			<v-icon>face</v-icon>
@@ -83,14 +83,17 @@ export default {
 		ProfessorApi.getCompiledProfs()
 			.then(res => {
 				for (let prof of res) {
-					MajorApi.getMajor(prof['major'])
-						.then(res => {
-							prof['major_stats'] = res
-						})
+					if (prof.major != null) {
+						MajorApi.getMajor(prof['major'])
+							.then(res => {
+								prof['major_stats'] = res
+							})
+					}
 					preCompProfessors.push(prof)
 				}
 			})
 			.catch(e => console.log(e))
+		console.log(preCompProfessors)
 		this.professors = preCompProfessors
 	},
 

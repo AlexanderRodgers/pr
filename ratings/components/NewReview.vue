@@ -7,14 +7,14 @@
                     <v-btn icon dark @click="dialog = false">
                         <v-icon>close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>Rate {{ professor }}</v-toolbar-title>
+                    <v-toolbar-title>Rate {{ professor.first_name + ' ' + professor.last_name }}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat @click="dialog = false">Save</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
             <v-container>
-                <h2>{{ professor }}'s Rating</h2>
+                <h2>{{ professor.first_name + ' ' + professor.last_name }}'s Rating</h2>
                 <v-select
                     :items="rating"
                     v-model="postData.rating"
@@ -47,28 +47,28 @@
                             mask="###"
                             required
                         />
-                        <!-- <v-text-field
-                            label="Year Taken"
-                            v-model="yearTaken"
-                            mask="####"
-                            :rules="[formRules.validateYear(yearTaken)]"/> -->
                     </v-flex>
                     <v-flex xs12 sm6 md3 >
                         <v-select
                             :items="major"
                             item-text="abbreviation"
+                            item-value="id"
+                            v-model="postData.major"
                             label="Major"
                             :rules="[v => !!v || 'This field is required']"
                             required
                         />
                     </v-flex>
                         <v-radio-group 
-                    v-model="quarter">
+                        mandatory
+                        :rules="[v => !!v || 'This field is required']"
+                        v-model="postData.quarter">
                         <v-radio
                         v-for="(item, index) in quarterLabel"
                         :key="index"
                         :label="item"
-                        :value="index"/>
+                        :value="index"
+                        />
                     </v-radio-group>
                 </v-layout>
                 <v-textarea
@@ -97,11 +97,12 @@ export default {
     mixins: [reviewConstants],
 
     props: {
-        professor: String,
+        professor: Object,
     },
 
     data() {
         return {
+            dev: 'localhost:8000/api/',
             dialog: false,
             postData: {},
             classNum: 0,
@@ -116,13 +117,18 @@ export default {
     methods: {
         validate() {
             if (this.$refs.form.validate()) {
-                console.log('Review valid')
                 this.submit()
             }
         },
 
         submit() {
-            //TODO: The entire method. Also fill in the v-model values for the rest of the form.
+            this.postData['professor'] = this.professor.id
+            console.log(this.postData)
+            axios.post(this.dev + 'reviews/', this.postData)
+                .then(res => {
+                    res.status === 201 ? console.log('##### REVIEW VALID #####') : console.log('##### REVIEW INVALID ######')
+                })
+                .catch(e => console.error(e))
         }
     },
 

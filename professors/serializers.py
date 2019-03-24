@@ -96,7 +96,6 @@ class GetProfessorSerializer(serializers.ModelSerializer):
         return instance
 
     def get_gpa(self, obj):
-        print('obj to get_gpa', obj)
         queryset = Review.objects.filter(professor__first_name=obj.first_name)
         grade_points = { 
             'A+': 4.1, 'A': 4.0, 'A-': 3.7,

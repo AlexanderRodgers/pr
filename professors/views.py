@@ -18,6 +18,7 @@ def professor_list(request):
             print('request data', request.data)
             serializer.create(request.data.copy())
             return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print('data invalid?')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     elif (request.method == 'DELETE'):

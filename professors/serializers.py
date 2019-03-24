@@ -35,12 +35,15 @@ class ProfessorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         print('validated data', validated_data)
-        major_id = validated_data.pop('major')
-        print(major_id)
-        major = Major.objects.get(id=major_id)
-        print(major)
-        p = Professor.objects.create(major=major, **validated_data)
-        return p
+        if 'major' in validated_data.keys():
+            major_id = validated_data.pop('major')
+            print(major_id)
+            major = Major.objects.get(id=major_id)
+            print(major)
+            p = Professor.objects.create(major=major, **validated_data)
+            return p
+        else:
+            p = Professor.objects.create(**validated_data)
 
     def update(self, instance, validated_data):
         instance.first_name = validated_data.get('first_name', instance.first_name)

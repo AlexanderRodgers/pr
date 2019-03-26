@@ -1,11 +1,12 @@
 <template>
    <v-container>
       <v-layout>
-         <v-flex xs12 md3>
+         <v-flex xs3 md3>
             <v-card>
                <v-card-text>
                   User: {{ review.user }} <br/>
                   Professor Rating: {{ review.rating}} <br/>
+                  {{ review.major }} {{ review.class_num }}  <br/>
                   Class Grade: {{ review.class_grade }} <br/>
                   Class Difficulty: {{ review.difficulty }} <br/>
                   {{ translateQuarter(review.quarter) }} Quarter<br/>
@@ -24,6 +25,7 @@
 </template>
 
 <script>
+import MajorApi from '~/services/api/majors.js'
 export default {
    props: {
       review: Object,
@@ -39,6 +41,13 @@ export default {
             
          }
       }
+   },
+
+   mounted() {
+      MajorApi.getMajor(this.review.major)
+         .then(res => {
+            this.review['major'] = res.abbreviation
+         })
    }
 }
 </script>

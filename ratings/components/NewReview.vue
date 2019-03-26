@@ -10,7 +10,7 @@
                     <v-toolbar-title>Rate {{ professor.first_name + ' ' + professor.last_name }}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark flat @click="testSubmit()">Save</v-btn>
+                        <v-btn dark flat @click="persist">Save</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
             <v-container>
@@ -115,9 +115,6 @@ export default {
     },
 
     methods: {
-        testSubmit() {
-            this.$emit('emitted', {name: 'Alex Rodgers', age: 19})
-        },
 
         validate() {
             if (this.$refs.form.validate()) {
@@ -131,14 +128,18 @@ export default {
             axios.post(this.dev + `reviews/${this.professor.id}/`, this.postData)
                 .then(res => {
                     if(res.status === 201) {
-                        console.log('##### REVIEW VALID #####')
                         this.$emit('review-valid', this.postData)
-                    } else {
-                        console.log('##### REVIEW INVALID ######')
+                    } else if (res.status === 404) {
+                        console.log('404: professor not found.')
                     }
                     this.dialog = false;
                 })
                 .catch(e => console.error(e))
+        },
+
+        persist() {
+            localStorage.formData = JSON.stringify(this.postData)
+            this.dialog = false
         }
     },
 
@@ -149,6 +150,9 @@ export default {
                     this.major.push(major)
                 }
             })
+        if (localStorage.formData) {
+            this.postData = JSON.parse(localStorage.formData)
+        }
     }
 }
 </script>

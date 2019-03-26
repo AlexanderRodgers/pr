@@ -123,6 +123,3 @@ class GetProfessorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Professor
         fields = ('id', 'first_name', 'last_name', 'slug','email', 'major', 'reviews', 'gpa')
-
-
-    

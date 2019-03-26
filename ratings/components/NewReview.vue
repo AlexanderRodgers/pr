@@ -10,7 +10,7 @@
                     <v-toolbar-title>Rate {{ professor.first_name + ' ' + professor.last_name }}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
-                        <v-btn dark flat @click="dialog = false">Save</v-btn>
+                        <v-btn dark flat @click="testSubmit()">Save</v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
             <v-container>
@@ -115,6 +115,10 @@ export default {
     },
 
     methods: {
+        testSubmit() {
+            this.$emit('emitted', {name: 'Alex Rodgers', age: 19})
+        },
+
         validate() {
             if (this.$refs.form.validate()) {
                 this.submit()
@@ -126,7 +130,13 @@ export default {
             console.log(this.postData)
             axios.post(this.dev + `reviews/${this.professor.id}/`, this.postData)
                 .then(res => {
-                    res.status === 201 ? console.log('##### REVIEW VALID #####') : console.log('##### REVIEW INVALID ######')
+                    if(res.status === 201) {
+                        console.log('##### REVIEW VALID #####')
+                        this.$emit('review-valid', this.postData)
+                    } else {
+                        console.log('##### REVIEW INVALID ######')
+                    }
+                    this.dialog = false;
                 })
                 .catch(e => console.error(e))
         }

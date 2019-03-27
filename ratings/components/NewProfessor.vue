@@ -7,7 +7,14 @@
     <v-dialog v-model="dialog" max-width="35%">
         <v-card class="elevation-12">
             <v-toolbar dark color="primary title">Add a Professor</v-toolbar>
-            <v-form ref="form" v-model="valid" lazy-validation>
+            <v-form @submit.prevent="onSubmit" ref="form" v-model="valid" lazy-validation>
+                <vue-recaptcha
+                    ref="invisibleRecaptcha"
+                    @verify="onVerify"
+                    @expired="onExpired"
+                    size="invisible"
+                    :sitekey="sitekey"
+                />
                 <v-flex class="form-field">
                     <v-text-field
                     v-model="firstName"
@@ -47,7 +54,7 @@
                 </v-flex>
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn @click="validate()" color="primary">Add</v-btn>
+                        <v-btn type="submit" color="primary">Add</v-btn>
                 </v-card-actions>    
             </v-form>
         </v-card>
@@ -57,10 +64,16 @@
 
 <script>
 import axios from 'axios'
+import VueRecaptcha from 'vue-recaptcha'
 export default {
+
+    components: {
+        VueRecaptcha,
+    },
     
     data() {
         return {
+            sitekey: '6LeEdZoUAAAAAAbL_j7ewtNS_wvhjDUyDj0IkMgP',
             dialog: false,
             valid: true,
             dev_mode: true,
@@ -93,8 +106,22 @@ export default {
             }
         },
 
+        onVerify(response) {
+            console.log('Verify', response)
+            this.$refs.invisibleRecaptcha.reset();
+        },
+
+        onSubmit() {
+            console.log('submitted.')
+            this.$refs.invisibleRecaptcha.execute()
+            
+        },
+
+        onExpired() {
+            console.log('expired.')
+        },
+
         submit() {
-            console.log(this.major)
             if(this.dev_mode) {
                 if(!this.email.includes('@calpoly.edu')) {
                     this.email += '@calpoly.edu'
@@ -129,6 +156,11 @@ export default {
                     this.majorList.push(major)
                 }
             })
+        let recaptchaScript = document.createElement('script')
+        recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit   ')
+        recaptchaScript.async = true
+        recaptchaScript.defer = true
+        document.head.appendChild(recaptchaScript)
     }
 
 }

@@ -1,10 +1,33 @@
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+import requests
+import json
 from professors.models import *
 from professors.serializers import *
+from decouple import config
+from unipath import Path
+BASE_DIR = Path(__file__).parent
+DEBUG = config('DEBUG', default=False, cast=bool)
+TEMPLATE_DEBUG = DEBUG
 
 # TODO: Refactor to better use the ViewList library
+
+@api_view(['GET', 'POST'])
+def captcha_verificatiton(request):
+    if request.method == 'POST':
+        print(request.data['response'])
+        data = { 
+            'secret': config('CAPTCHA_SECRET_KEY'),
+            'response': request.data['response']
+        }
+        response = requests.post('https://www.google.com/recaptcha/api/siteverify', data)
+        print('response type', type(response.json()))
+        serializer = CaptchaSerializer(data=response.json())
+        if serializer.is_valid():
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        print(serializer.errors)    
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['GET', 'POST', 'DELETE'])
 def professor_list(request):

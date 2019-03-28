@@ -1,9 +1,10 @@
 <template>
   <div>
     <v-layout row align-center class="flex-container">
-      <search fluid class="flex-item"/>
-      <new-professor v-on:validated="updateProfs($event)" class="flex-item"/>
+      <search :professors="professors" fluid class="flex-item"/>
+      <new-professor v-on:validated="updateProfs" class="flex-item"/>
     </v-layout>
+    <v-btn @click="addTestProfessor">Add test prof</v-btn>
     <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
@@ -26,10 +27,12 @@
 import profs from '~/mixins/profs.js'
 import Search from '~/components/Search'
 import NewProfessor from '~/components/NewProfessor'
+import ProfessorApi from '~/services/api/professors.js'
+import MajorApi from '~/services/api/majors.js'
 import axios from 'axios'
 export default {
 
-  mixins: [profs],
+  // mixins: [profs],
 
   components: {
     Search,
@@ -38,6 +41,7 @@ export default {
 
   data() {
     return {
+      professors: [],
       newPost: {},
       snackbarResponse: '',
       show: false,
@@ -46,22 +50,54 @@ export default {
       x: null,
       mode: '',
       timeout: 2000,
+      testProf: {
+        id: 4,
+        first_name: "alex",
+        last_name: "rodg",
+        slug: "alex-rodg",
+        email: "hellothere!",
+        major: null,
+        reviews: [],
+        gpa: -1
+      },
     }
   },
 
   methods: {
+    addTestProfessor() {
+      this.$set(this.professors, this.professors.length, this.testProf)
+    },
+
     updateProfs(newProf) {
-      // Check if object is empty.
       if (Object.entries(newProf).length === 0 && newProf.constructor === Object) {
         this.snackbarResponse = 'Unable to add professor'
       } else {
         newProf['first_last'] = newProf.first_name + " " + newProf.last_name
-        this.professors.unshift(newProf)
+        this.professors.push(newProf)
         this.snackbarResponse = `Professor ${newProf.last_name} added`
       }
       this.snackbar = true
     }
-  }
+  },
+
+  mounted() {
+		let preCompProfessors = []
+		ProfessorApi.getCompiledProfs()
+			.then(res => {
+				for (let prof of res) {
+					if (prof.major != null) {
+						MajorApi.getMajor(prof['major'])
+							.then(res => {
+								prof['major_stats'] = res
+							})
+					}
+					preCompProfessors.push(prof)
+				}
+			})
+			.catch(e => console.log(e))
+		console.log(preCompProfessors)
+		this.professors = preCompProfessors
+	},
 }
 </script>
 

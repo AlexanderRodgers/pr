@@ -1,7 +1,6 @@
 <template>
 <v-container fluid fill-height>
 	<v-layout align-center fill-height>
-		<!-- The autocomplete component is giving me weird effects when a user tries deleting their search. -->
 		<v-autocomplete
 				:items="professors"
 				placeholder="Search for a Professor"
@@ -31,10 +30,7 @@
 		<v-list-tile-avatar
 			v-else
 			color="blue-grey darken-1"
-			class="font-weight-light white--text avatar"
-		>
-			N/A
-		</v-list-tile-avatar>
+			class="font-weight-light white--text avatar">N/A</v-list-tile-avatar>
 
 		<v-list-tile-content>
 			<v-list-tile-title v-text="item.first_last"></v-list-tile-title>
@@ -62,38 +58,20 @@
 import axios from 'axios'
 import slugify from 'slugify'
 import profs from '~/mixins/profs.js'
-import ProfessorApi from '~/services/api/professors.js'
-import MajorApi from '~/services/api/majors.js'
 export default {
+
+	props: {
+		professors: Array,
+	},
 
     // mixins: [profs],
 
     data() {
-        return {
-			professors: [], 
+        return { 
 			myProfs: [],
             search: '',
             dev: 'http://localhost:8000',
         }
-	},
-	
-	mounted() {
-		let preCompProfessors = []
-		ProfessorApi.getCompiledProfs()
-			.then(res => {
-				for (let prof of res) {
-					if (prof.major != null) {
-						MajorApi.getMajor(prof['major'])
-							.then(res => {
-								prof['major_stats'] = res
-							})
-					}
-					preCompProfessors.push(prof)
-				}
-			})
-			.catch(e => console.log(e))
-		console.log(preCompProfessors)
-		this.professors = preCompProfessors
 	},
 
     methods: {

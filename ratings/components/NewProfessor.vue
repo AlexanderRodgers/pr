@@ -19,7 +19,7 @@
                     <v-text-field
                     v-model="firstName"
                     label="First Name"
-                    :rules="[formRules.hasContent(firstName), formRules.hasNumber(lastName)]"
+                    :rules="[v => !!v || 'This field is required']"
                     required
                     outline
                     />
@@ -28,7 +28,7 @@
                     <v-text-field
                     v-model="lastName"
                     label="Last Name"
-                    :rules="[formRules.hasContent(lastName), formRules.hasNumber(lastName)]"
+                    :rules="[v => !!v || 'This field is required']"
                     required
                     outline
                     />
@@ -85,9 +85,6 @@ export default {
             dev: 'http://localhost:8000',
             build: '',
             formRules: {
-                hasContent(str) {
-                    return !!str || 'Cannot submit an empty value'
-                },
                 hasNumber(str) {
                     var re = /^[A-Za-z]+$/
                     if (re.test(str)) {
@@ -106,14 +103,26 @@ export default {
             }
         },
 
-        onVerify(response) {
-            console.log('Verify', response)
+        onVerify(vResponse) {
+            console.log('Verify', vResponse)
             this.$refs.invisibleRecaptcha.reset();
+            axios.post('http://localhost:8000/api/verification/', {
+                response: vResponse
+            }).then(res => {
+                if(res.status === 200) {
+                    console.log('captcha successful.')
+                    this.submit()
+                }
+                console.log(res)
+            }).catch(e => console.log(e))
+            
         },
 
         onSubmit() {
-            console.log('submitted.')
-            this.$refs.invisibleRecaptcha.execute()
+            if(this.$refs.form.validate()) {
+                console.log('submitted.')
+                this.$refs.invisibleRecaptcha.execute()
+            }
             
         },
 

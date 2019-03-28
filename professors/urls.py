@@ -9,5 +9,6 @@ urlpatterns = [
     path('majors/<int:pk>/', views.major_detail_pk),
     path('majors/<slug:slug>/', views.major_detail),
     path('reviews/', views.review_list),
-    path('reviews/<int:pk>/', views.professor_review)
+    path('reviews/<int:pk>/', views.professor_review),
+    path('verification/', views.captcha_verificatiton),
 ]

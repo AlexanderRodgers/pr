@@ -38,6 +38,7 @@ ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
+    'rest_framework_recaptcha',
     'professors.apps.ProfessorsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -65,6 +66,7 @@ CORS_ORIGIN_WHITELIST = (
 )
 CORS_ORIGIN_REGEX_WHITELIST = (
     'localhost:8000',
+    'www.google.com/'
 )
 
 ROOT_URLCONF = 'pr.urls'
@@ -140,3 +142,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+DRF_RECAPTCHA_SECRET_KEY = config('CAPTCHA_SECRET_KEY')
+
+DRF_RECAPTCHA_VERIFY_ENDPOINT = 'https://www.google.com/recaptcha/api/siteverify'

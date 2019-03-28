@@ -1,6 +1,11 @@
 from rest_framework import serializers
 from professors.models import *
 
+class CaptchaSerializer(serializers.Serializer):
+    success = serializers.BooleanField()
+    challenge_ts = serializers.DateTimeField()
+    hostname = serializers.CharField(max_length=None)
+
 class MajorSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         return Major.objects.create(**validated_data)

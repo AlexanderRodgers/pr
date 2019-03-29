@@ -144,7 +144,7 @@ export default {
     },
 
     mounted() {
-        axios.get('http://localhost:8000/api/majors/')
+        axios.get(this.dev + '/api/majors/')
             .then(res => {
                 for (let major of res.data) {
                     this.major.push(major)

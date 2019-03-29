@@ -30,6 +30,7 @@ export default {
 
     data() {
         return {
+            dev: 'http://localhost:8000/',
             gpa: 0,
         }
     },
@@ -42,7 +43,7 @@ export default {
 
     async asyncData({ params, error, payload }) {
         if (payload) return { data: payload }
-        else return axios.get(`http://localhost:8000/api/professors/${params.profile}`)
+        else return axios.get(`${this.dev}api/professors/${params.profile}`)
         .then(res => {
             return { data: res.data }
         })

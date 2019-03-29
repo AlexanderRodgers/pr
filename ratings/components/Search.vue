@@ -68,9 +68,8 @@ export default {
 
     data() {
         return { 
-			myProfs: [],
             search: '',
-            dev: 'http://localhost:8000',
+			dev: 'http://localhost:8000/',
         }
 	},
 
@@ -110,7 +109,7 @@ export default {
 		},
 		
 		getMajor(majorId) {
-			axios.get('http://localhost:8000/api/majors/' + majorId)
+			axios.get(this.dev + 'api/majors/' + majorId)
 				.then(res => {
 					console.log(res.data.major)
 					return res.data.major

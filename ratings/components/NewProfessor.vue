@@ -76,13 +76,12 @@ export default {
             sitekey: '6LeEdZoUAAAAAAbL_j7ewtNS_wvhjDUyDj0IkMgP',
             dialog: false,
             valid: true,
-            dev_mode: true,
             firstName: '',
             lastName: '',
             email: '',
             major: '',
             majorList: [],
-            dev: 'http://localhost:8000',
+            dev: 'http://localhost:8000/',
             build: '',
             formRules: {
                 hasNumber(str) {
@@ -106,7 +105,7 @@ export default {
         onVerify(vResponse) {
             console.log('Verify', vResponse)
             this.$refs.invisibleRecaptcha.reset();
-            axios.post('http://localhost:8000/api/verification/', {
+            axios.post(this.dev + 'api/verification/', {
                 response: vResponse
             }).then(res => {
                 if(res.status === 200) {
@@ -131,28 +130,26 @@ export default {
         },
 
         submit() {
-            if(this.dev_mode) {
-                if(!this.email.includes('@calpoly.edu')) {
-                    this.email += '@calpoly.edu'
-                }
-                let postData = {
-                    first_name: this.firstName,
-                    last_name: this.lastName,
-                    email: this.email ? this.email : undefined,
-                    major: this.major ? this.major : undefined
-                }
-                axios.post(this.dev + '/api/professors/', postData)
-                .then(res => {
-                    if (res.status === 201) {
-                        this.$emit('validated', postData)
-                    } else if (res.status === 400) {
-                        this.$emit('validated', {})
-                    }
-                    console.log(res)
-                }).catch(e => {
-                    console.log(e)
-                })
+            if(!this.email.includes('@calpoly.edu')) {
+                this.email += '@calpoly.edu'
             }
+            let postData = {
+                first_name: this.firstName,
+                last_name: this.lastName,
+                email: this.email ? this.email : undefined,
+                major: this.major ? this.major : undefined
+            }
+            axios.post(this.dev + 'api/professors/', postData)
+            .then(res => {
+                if (res.status === 201) {
+                    this.$emit('validated', postData)
+                } else if (res.status === 400) {
+                    this.$emit('validated', {})
+                }
+                console.log(res)
+            }).catch(e => {
+                console.log(e)
+            })
             this.snackbar = false
             this.dialog = false
         }
@@ -166,7 +163,7 @@ export default {
                 }
             })
         let recaptchaScript = document.createElement('script')
-        recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit   ')
+        recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit')
         recaptchaScript.async = true
         recaptchaScript.defer = true
         document.head.appendChild(recaptchaScript)

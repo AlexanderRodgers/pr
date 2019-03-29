@@ -4,7 +4,6 @@
       <search :professors="professors" fluid class="flex-item"/>
       <new-professor v-on:validated="updateProfs" class="flex-item"/>
     </v-layout>
-    <v-btn @click="addTestProfessor">Add test prof</v-btn>
     <v-snackbar
       v-model="snackbar"
       :timeout="timeout"
@@ -43,6 +42,7 @@ export default {
     return {
       professors: [],
       newPost: {},
+      updateList: false,
       snackbarResponse: '',
       show: false,
       snackbar: false,
@@ -50,25 +50,13 @@ export default {
       x: null,
       mode: '',
       timeout: 2000,
-      testProf: {
-        id: 4,
-        first_name: "alex",
-        last_name: "rodg",
-        slug: "alex-rodg",
-        email: "hellothere!",
-        major: null,
-        reviews: [],
-        gpa: -1
-      },
     }
   },
 
   methods: {
-    addTestProfessor() {
-      this.$set(this.professors, this.professors.length, this.testProf)
-    },
 
     updateProfs(newProf) {
+      // Most likely need to make professors some sort of computed property to show changes. I can't figure it out at this moment.
       if (Object.entries(newProf).length === 0 && newProf.constructor === Object) {
         this.snackbarResponse = 'Unable to add professor'
       } else {

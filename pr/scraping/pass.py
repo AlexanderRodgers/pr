@@ -20,11 +20,22 @@ try:
     print('found button!')
 except TimeoutException:
     print('page timed out.')
-# browser.find_element_by_id('dismissNew').click()
 
 username = browser.find_element_by_id('username')
 password = browser.find_element_by_id('password')
-
+# TODO: this
 username.send_keys('')
 password.send_keys('')
 browser.find_element_by_name('_eventId_proceed').click()
+browser.find_element_by_id('dismissNew').click()
+# filter_box = browser.find_element_by_id('filterbox-list-view')
+department_list = browser.find_element_by_xpath("//select[@data-filter='dept']")
+majors = department_list.find_elements_by_tag_name('option')
+for major in majors:
+    split = major.text.split('-')
+    abbv = split[0]
+    pre_major = split[1].split(' ')
+    for i, word in enumerate(pre_major):
+        if word != 'and':
+            pre_major[i] = word.capitalize()
+    pre_major = ' '.join(pre_major)

@@ -12,6 +12,7 @@
 				:rules="[searchValid(search)]"
 				@click:append="runSearch(search)"
 				@keyup.enter="runSearch(search)"
+				return-objects
 		>
 
 		<template
@@ -76,17 +77,17 @@ export default {
     methods: {
         colorIcon(profObj) {
             if(profObj.gpa === -1) {
-							return "neutral"
-						}
-						else if(profObj.gpa > 3.0) {
-							return "positive"
-						}
-						else if(profObj.gpa > 2.0) {
-							return "warning"
-						}
-						else {
-							return "bad"
-						}
+				return "neutral"
+			}
+			else if(profObj.gpa > 3.0) {
+				return "positive"
+			}
+			else if(profObj.gpa > 2.0) {
+				return "warning"
+			}
+			else {
+				return "bad"
+			}
         },
 
         searchValid(search) {
@@ -102,6 +103,7 @@ export default {
         },
 
         runSearch(search) {
+			console.log(search)
             if(search) {
                 this.$router.push('/professors/' + search)  
             }

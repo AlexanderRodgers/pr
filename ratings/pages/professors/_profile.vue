@@ -1,6 +1,6 @@
 <template>
 <div>
-    <gpa :gpa="gpa"/>
+    <!-- <gpa :gpa="gpa"/> -->
     <div>
         <h1>{{ data.first_name + " " + data.last_name }}</h1>
         <new-review :professor="data" v-on:review-valid="addReview"/>
@@ -43,7 +43,7 @@ export default {
 
     async asyncData({ params, error, payload }) {
         if (payload) return { data: payload }
-        else return axios.get(`${this.dev}api/professors/${params.profile}`)
+        else return axios.get(`http://localhost:8000/api/professors/${params.profile}`)
         .then(res => {
             return { data: res.data }
         })

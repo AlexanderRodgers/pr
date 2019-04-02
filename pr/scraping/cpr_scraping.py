@@ -86,7 +86,7 @@ def scrape_professors():
             print(major_fk)
             # post_data = {
             #     'first_name': full_name[0],
-            #     'last_name': full_name[1],
+            #     'last_name': full_name[-1],
             #     major: major_fk
             # }
             # r = requests.post(api_url + 'professors/', data=post_data)

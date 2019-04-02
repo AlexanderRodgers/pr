@@ -1,8 +1,11 @@
 from bs4 import BeautifulSoup
 import csv
 import os
+import sys
+sys.path.append('/pr/scraping')
 from slugify import slugify
 import json
+from requests import ConnectionError
 import requests
 import time
 import re
@@ -46,28 +49,61 @@ def scrape_professors():
     x = 0
     professors = {}
     while x < page_limit:
-        if x != 0:
-            response = requests.get(link + '?page=' + str(x), timeout=5)
+        if x == 0:
             response = requests.get(link, timeout=5)
+        else:
+            response = requests.get(link + '?page=' + str(x), timeout=5)
         soup = BeautifulSoup(response.content, 'lxml')
         content = soup.find_all('button', {'class': 'teacher-btn'})
         done = False
         for prof in content:
             full_name = prof.contents[2].split(' ')
             major = str(prof.contents[3].span.contents[1])
-            if major == 'AEPS':
-                major = 'agricultural-and-environmental-plant-sciences'
+            print(full_name)
+            print(major)
             response = requests.get(api_url + 'majors/' + slugify(major))
+            if response.status_code == 404:
+                print('Url invalid. Attempting to find major with csv file.')
+                if not os.path.isfile('majors.csv'):
+                    scrape_majors()
+                with open('majors.csv', mode='r', newline='') as f:
+                    old_major = major[:]
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        if row['abbreviation'] == major:
+                            print('major found.')
+                            major == row['major']
+                            break
+                    if major == old_major:
+                        print('could not find {} adding {} to log for manual entry.'.format(major, full_name[0] + ' ' + full_name[-1]))
+                        if not os.path.isfile('add_professors.csv'):
+                            create_prof_add_file()
+                        else:
+                            manual_prof_add(full_name[0], full_name[-1], major)
+                        return
+                    response = requests.get(api_url + 'majors/' + slugify(major))  
             major_fk = response.json()
             print(major_fk)
-            post_data = {
-                'first_name': full_name[0],
-                'last_name': full_name[1],
-                major: major_fk
-            }
-            r = requests.post(api_url + 'professors/', data=post_data)
-            print('professor {} added'.format(post_data['first_name']))
+            # post_data = {
+            #     'first_name': full_name[0],
+            #     'last_name': full_name[1],
+            #     major: major_fk
+            # }
+            # r = requests.post(api_url + 'professors/', data=post_data)
+            # print('professor {} added'.format(post_data['first_name']))
         x += 1
+
+def create_prof_add_file():
+    print('creating add_professors.csv')
+    with open('add_professors.csv', mode='w', newline='') as f:
+        writer = csv.writer(f, delimiter=',')
+        writer.writerow(['firstName', 'LastName', 'email', 'major'])
+        print('done!')
+
+def manual_prof_add(first, last, major):
+    with open('add_professors.csv', mode='a', newline='') as f:
+        writer = csv.writer(f, delimiter=',')
+        writer.writerow(first, last, None, major)
 
 def write_majors(abbv, major):
     with open('majors.csv', mode='a', newline='') as f:
@@ -77,4 +113,6 @@ def write_majors(abbv, major):
         writer = csv.writer(f, delimiter=',')
         writer.writerow([abbv, major])
 
-scrape_majors()
+# scrape_majors()
+# get_num_pages()
+scrape_professors()

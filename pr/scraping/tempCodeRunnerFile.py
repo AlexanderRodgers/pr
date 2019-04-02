@@ -1,2 +1,2 @@
-.post(api_url + 'majors/', 
-            #     data={'m
+in reader:
+                    #     prin

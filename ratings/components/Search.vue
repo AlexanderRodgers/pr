@@ -7,7 +7,6 @@
 				append-icon="search"
 				item-text="first_last"
 				item-value="id"
-				cache-items
 				:search-input.sync="search"
 				:rules="[searchValid(search)]"
 				@click:append="runSearch(search)"
@@ -91,8 +90,8 @@ export default {
         },
 
         searchValid(search) {
-            var isProfessor = function(profs) {
-                return search === profs.id
+            let isProfessor = function(profs) {
+                return search === profs.first_last
 			}
 			if(!search || search == null) {
 				return true
@@ -100,12 +99,22 @@ export default {
             return this.professors.some(isProfessor)
                 ? true
                 : "That professor doesn't exist"
-        },
+		},
+		
+		professorBySearch(search) {
+			for (let prof of this.professors) {
+				if (prof.first_last === search) {
+					return prof
+				}
+			}
+			return null
+		},
 
         runSearch(search) {
 			console.log(search)
-            if(search) {
-                this.$router.push('/professors/' + search)  
+			let prof = this.professorBySearch(search)
+            if(search && prof != null) {
+                this.$router.push('/professors/' + prof.id)  
             }
             
 		},
@@ -113,7 +122,6 @@ export default {
 		getMajor(majorId) {
 			axios.get(this.dev + 'api/majors/' + majorId)
 				.then(res => {
-					console.log(res.data.major)
 					return res.data.major
 				})
 				.catch(e => {

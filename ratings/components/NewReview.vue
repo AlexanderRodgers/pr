@@ -138,7 +138,10 @@ export default {
         },
 
         persist() {
-            localStorage.formData = JSON.stringify(this.postData)
+            // Creating a deep copy so we don't modify the postData
+            let persistedInfo = JSON.parse(JSON.stringify(this.postData))
+            persistedInfo['id'] = this.professor.id
+            localStorage.formData = JSON.stringify(persistedInfo)
             this.dialog = false
         }
     },
@@ -151,7 +154,10 @@ export default {
                 }
             })
         if (localStorage.formData) {
-            this.postData = JSON.parse(localStorage.formData)
+            let parsedStorage = JSON.parse(localStorage.formData)
+            if (parsedStorage.id === this.professor.id) {
+                this.postData = parsedStorage
+            }
         }
     }
 }

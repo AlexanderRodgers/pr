@@ -1,2 +1,0 @@
-in reader:
-                    #     prin

@@ -61,7 +61,9 @@ def scrape_professors():
             major = str(prof.contents[3].span.contents[1])
             print(full_name)
             print(major)
-            response = requests.get(api_url + 'majors/' + slugify(major))
+            print(slugify(major))
+            response = requests.get(api_url + 'majors/' + slugify(major), timeout=5)
+            time.sleep(1)
             if response.status_code == 404:
                 print('Url invalid. Attempting to find major with csv file.')
                 if not os.path.isfile('majors.csv'):
@@ -82,8 +84,8 @@ def scrape_professors():
                             manual_prof_add(full_name[0], full_name[-1], major)
                         return
                     response = requests.get(api_url + 'majors/' + slugify(major))  
-            major_fk = response.json()
-            print(major_fk)
+            # major_fk = response.json()
+            # print(major_fk)
             # post_data = {
             #     'first_name': full_name[0],
             #     'last_name': full_name[-1],

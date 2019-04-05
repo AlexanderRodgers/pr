@@ -64,26 +64,35 @@ def scrape_professors():
             if not os.path.isfile('majors.csv'):
                 scrape_majors()
             with open('majors.csv', mode='r', newline='') as f:
-                old_major = major[:]
                 reader = csv.DictReader(f)
                 found = False
                 for row in reader:
                     if row['major'] == major:
                         print('major found.')
                         found = True
+                        if not os.path.isfile('professors.csv'):
+                            params = ['firstName', 'LastName', 'email', 'major']
+                            create_csv('professors.csv', *params)
+                        prof_params = [full_name[0], full_name[-1], None, major]
+                        prof_append('professors.csv', *prof_params)
                         break
                 if not found:
+                    is_abbv = True
                     for row in reader:
                         if row['abbreviation'] == major:
                             print('found major as abbv')
                             major = row['major']
+                            is_abbv = False
                             break
-                if major == old_major:
-                    print('could not find {}\nAdding {} to log'.format(major, full_name[0] + ' ' + full_name[-1]))
-                    if not os.path.isfile('add_professors.csv'):
-                        create_prof_add_file()
-                    else:
-                        manual_prof_add(full_name[0], full_name[-1], major)
+                    if is_abbv:
+                        print('could not find {}\nAdding {} to log'.format(major, full_name[0] + ' ' + full_name[-1]))
+                        if not os.path.isfile('add_professors.csv'):
+                            params = ['firstName', 'LastName', 'email', 'major']
+                            create_csv('add_professors.csv', *params)
+                        else:
+                            prof_params = [full_name[0], full_name[-1], None, major]
+                            prof_append('add_professors.csv', *prof_params)
+                
             # major_fk = response.json()
             # print(major_fk)
             # post_data = {
@@ -95,17 +104,26 @@ def scrape_professors():
             # print('professor {} added'.format(post_data['first_name']))
         x += 1
 
-def create_prof_add_file():
-    print('creating add_professors.csv')
-    with open('add_professors.csv', mode='w', newline='') as f:
+# TODO: Finish this function
+# def is_in_file(filename, *args):
+#     with open(filename, mode='r', newline='') as f:
+#         reader = csv.DictReader(f)
+#         for arg in args:
+#             for row in reader:
+#                 if row[arg] ==  
+
+
+def create_csv(filename, *args):
+    print('creating {}'.format(filename))
+    with open(filename, mode='w', newline='') as f:
         writer = csv.writer(f, delimiter=',')
-        writer.writerow(['firstName', 'LastName', 'email', 'major'])
+        writer.writerow([arg for arg in args])
         print('done!')
 
-def manual_prof_add(first, last, major):
-    with open('add_professors.csv', mode='a', newline='') as f:
+def prof_append(filename, *args):
+    with open(filename, mode='a', newline='') as f:
         writer = csv.writer(f, delimiter=',')
-        writer.writerow(first, last, None, major)
+        writer.writerow([arg for arg in args])
 
 def write_majors(abbv, major):
     with open('majors.csv', mode='a', newline='') as f:

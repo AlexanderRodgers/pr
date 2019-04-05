@@ -18,7 +18,7 @@ def get_num_pages():
     if response.status_code == 404:
         return -1
     soup = BeautifulSoup(response.content, 'lxml')
-    return int(soup.find('div', 'pagination').p.text.split()[2]) 
+    return int(soup.find('div', 'pagination').p.text.split()[2])
 
 def scrape_majors():
     response = requests.get(link, timeout=5)
@@ -61,29 +61,31 @@ def scrape_professors():
             major = str(prof.contents[3].span.contents[1])
             print(full_name)
             print(major)
-            response = requests.get(api_url + 'majors/' + slugify(major))
-            if response.status_code == 404:
-                print('Url invalid. Attempting to find major with csv file.')
-                if not os.path.isfile('majors.csv'):
-                    scrape_majors()
-                with open('majors.csv', mode='r', newline='') as f:
-                    old_major = major[:]
-                    reader = csv.DictReader(f)
+            if not os.path.isfile('majors.csv'):
+                scrape_majors()
+            with open('majors.csv', mode='r', newline='') as f:
+                old_major = major[:]
+                reader = csv.DictReader(f)
+                found = False
+                for row in reader:
+                    if row['major'] == major:
+                        print('major found.')
+                        found = True
+                        break
+                if not found:
                     for row in reader:
                         if row['abbreviation'] == major:
-                            print('major found.')
-                            major == row['major']
+                            print('found major as abbv')
+                            major = row['major']
                             break
-                    if major == old_major:
-                        print('could not find {} adding {} to log for manual entry.'.format(major, full_name[0] + ' ' + full_name[-1]))
-                        if not os.path.isfile('add_professors.csv'):
-                            create_prof_add_file()
-                        else:
-                            manual_prof_add(full_name[0], full_name[-1], major)
-                        return
-                    response = requests.get(api_url + 'majors/' + slugify(major))  
-            major_fk = response.json()
-            print(major_fk)
+                if major == old_major:
+                    print('could not find {}\nAdding {} to log'.format(major, full_name[0] + ' ' + full_name[-1]))
+                    if not os.path.isfile('add_professors.csv'):
+                        create_prof_add_file()
+                    else:
+                        manual_prof_add(full_name[0], full_name[-1], major)
+            # major_fk = response.json()
+            # print(major_fk)
             # post_data = {
             #     'first_name': full_name[0],
             #     'last_name': full_name[-1],

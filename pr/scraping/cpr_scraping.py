@@ -38,10 +38,10 @@ def scrape_majors():
                 if word != 'and' and word != 'in':
                     word_major[i] = word.capitalize()
             major = ' '.join(word_major)
-            abbv = opt.string
-            # write_majors(abbv, major)
-            r = requests.post(api_url + 'majors/', 
-                data={'major': major, 'abbreviation': abbv})
+            abbv = opt.string.strip()
+            write_majors(abbv, major)
+            # r = requests.post(api_url + 'majors/', 
+            #     data={'major': major, 'abbreviation': abbv})
             print(major, 'posted')
 
 def scrape_professors():
@@ -60,6 +60,8 @@ def scrape_professors():
             full_name = prof.contents[2].split(' ')
             major = str(prof.contents[3].span.contents[1])
             print(full_name)
+            major.replace("'", "")
+            major.strip()
             print(major)
             if not os.path.isfile('majors.csv'):
                 scrape_majors()
@@ -76,15 +78,20 @@ def scrape_professors():
                         prof_params = [full_name[0], full_name[-1], None, major]
                         prof_append('professors.csv', *prof_params)
                         break
+                print(reader)
+                f.seek(0)
                 if not found:
-                    is_abbv = True
+                    new_reader = csv.DictReader(f)
+                    is_abbv = False
                     for row in reader:
+                        print('searching for ' + major)
+                        print(row['abbreviation'])
                         if row['abbreviation'] == major:
                             print('found major as abbv')
                             major = row['major']
-                            is_abbv = False
+                            is_abbv = True
                             break
-                    if is_abbv:
+                    if not is_abbv:
                         print('could not find {}\nAdding {} to log'.format(major, full_name[0] + ' ' + full_name[-1]))
                         if not os.path.isfile('add_professors.csv'):
                             params = ['firstName', 'LastName', 'email', 'major']
@@ -92,7 +99,13 @@ def scrape_professors():
                         else:
                             prof_params = [full_name[0], full_name[-1], None, major]
                             prof_append('add_professors.csv', *prof_params)
-                
+                    else:
+                        if not os.path.isfile('professors.csv'):
+                            params = ['firstName', 'LastName', 'email', 'major']
+                            create_csv('professors.csv', *params)
+                        prof_params = [full_name[0], full_name[-1], None, major]
+                        prof_append('professors.csv', *prof_params)
+
             # major_fk = response.json()
             # print(major_fk)
             # post_data = {
@@ -102,6 +115,7 @@ def scrape_professors():
             # }
             # r = requests.post(api_url + 'professors/', data=post_data)
             # print('professor {} added'.format(post_data['first_name']))
+        time.sleep(1)
         x += 1
 
 # TODO: Finish this function
@@ -112,6 +126,14 @@ def scrape_professors():
 #             for row in reader:
 #                 if row[arg] ==  
 
+def test_find_abbv(abbv):
+    with open('majors.csv', mode='r', newline='') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            if row['abbreviation'] == abbv:
+                print('found major')
+                break
+        print('done')
 
 def create_csv(filename, *args):
     print('creating {}'.format(filename))
@@ -127,12 +149,13 @@ def prof_append(filename, *args):
 
 def write_majors(abbv, major):
     with open('majors.csv', mode='a', newline='') as f:
-        for line in f:
-            if abbv in line:
-                return
+        # for line in f:
+        #     if abbv in line:
+        #         return
         writer = csv.writer(f, delimiter=',')
         writer.writerow([abbv, major])
 
 # scrape_majors()
 # get_num_pages()
 scrape_professors()
+# test_find_abbv('AEPS')

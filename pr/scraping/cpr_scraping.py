@@ -60,8 +60,8 @@ def scrape_professors():
             full_name = prof.contents[2].split(' ')
             major = str(prof.contents[3].span.contents[1])
             print(full_name)
-            major.replace("'", "")
-            major.strip()
+            if "women" in major:
+                major = "Womens and Gender Studies"
             print(major)
             if not os.path.isfile('majors.csv'):
                 scrape_majors()
@@ -78,14 +78,12 @@ def scrape_professors():
                         prof_params = [full_name[0], full_name[-1], None, major]
                         prof_append('professors.csv', *prof_params)
                         break
-                print(reader)
                 f.seek(0)
                 if not found:
                     new_reader = csv.DictReader(f)
                     is_abbv = False
                     for row in reader:
-                        print('searching for ' + major)
-                        print(row['abbreviation'])
+                        print('searching for', major)
                         if row['abbreviation'] == major:
                             print('found major as abbv')
                             major = row['major']
@@ -105,26 +103,8 @@ def scrape_professors():
                             create_csv('professors.csv', *params)
                         prof_params = [full_name[0], full_name[-1], None, major]
                         prof_append('professors.csv', *prof_params)
-
-            # major_fk = response.json()
-            # print(major_fk)
-            # post_data = {
-            #     'first_name': full_name[0],
-            #     'last_name': full_name[-1],
-            #     major: major_fk
-            # }
-            # r = requests.post(api_url + 'professors/', data=post_data)
-            # print('professor {} added'.format(post_data['first_name']))
         time.sleep(1)
         x += 1
-
-# TODO: Finish this function
-# def is_in_file(filename, *args):
-#     with open(filename, mode='r', newline='') as f:
-#         reader = csv.DictReader(f)
-#         for arg in args:
-#             for row in reader:
-#                 if row[arg] ==  
 
 def test_find_abbv(abbv):
     with open('majors.csv', mode='r', newline='') as f:
@@ -149,13 +129,27 @@ def prof_append(filename, *args):
 
 def write_majors(abbv, major):
     with open('majors.csv', mode='a', newline='') as f:
-        # for line in f:
-        #     if abbv in line:
-        #         return
         writer = csv.writer(f, delimiter=',')
         writer.writerow([abbv, major])
 
+def post_professor_from_file():
+    with open('professors.csv', mode='r', newline='') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            response = requests.get(api_url + 'majors/' + slugify(row['major']))
+            major_fk = response.json()
+            print(major_fk)
+            time.sleep(1)
+            post_data = {
+                'first_name': row['firstName'],
+                'last_name': row['LastName'],
+                'major': major_fk
+            }
+            r = requests.post(api_url + 'professors/', data=post_data)
+            print('professor {} added'.format(post_data['first_name']))
+
 # scrape_majors()
 # get_num_pages()
-scrape_professors()
-# test_find_abbv('AEPS')
+# scrape_professors()
+# gender_studies()
+post_professor_from_file()

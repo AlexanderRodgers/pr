@@ -60,7 +60,12 @@ export default {
       if (Object.entries(newProf).length === 0 && newProf.constructor === Object) {
         this.snackbarResponse = 'Unable to add professor'
       } else {
+        MajorApi.getMajor(newProf['major'])
+        .then(res => {
+          newProf['major_stats'] = res
+        })
         newProf['first_last'] = newProf.first_name + " " + newProf.last_name
+        newProf['gpa'] = -1
         this.professors.push(newProf)
         this.snackbarResponse = `Professor ${newProf.last_name} added`
       }

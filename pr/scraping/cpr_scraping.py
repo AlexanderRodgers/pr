@@ -137,16 +137,19 @@ def post_professor_from_file():
         reader = csv.DictReader(f)
         for row in reader:
             response = requests.get(api_url + 'majors/' + slugify(row['major']))
-            major_fk = response.json()
+            major_fk = int(response.json()['id'])
+            print(row['firstName'])
+            print(row['LastName'])
             print(major_fk)
-            time.sleep(1)
             post_data = {
                 'first_name': row['firstName'],
                 'last_name': row['LastName'],
                 'major': major_fk
             }
+            print(post_data)
             r = requests.post(api_url + 'professors/', data=post_data)
-            print('professor {} added'.format(post_data['first_name']))
+            print(r)
+            # print('professor {} added'.format(post_data['first_name']))
 
 # scrape_majors()
 # get_num_pages()

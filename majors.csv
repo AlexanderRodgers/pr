@@ -1,96 +1,96 @@
 abbreviation,major
- AERO ,Aerospace Engineering
- AGB ,Agribusiness
- AEPS ,Agricultural and Environmental Plant Sciences
- AGC ,Agricultural Communication
- AGED ,Agricultural Education
- AG ,Agriculture
- ASCI ,Animal Science
- ANT ,Anthropology
- ARCE ,Architectural Engineering
- ARCH ,Architecture
- ART ,Art
- ASTR ,Astronomy and Astrophysics
- BIO ,Biology
-  BMED ,Biomedical Engineering
- BRAE ,Bioresource and Agricultural Engineering
- BOT ,Botany
- BUS ,Business
- CHEM ,Chemistry
- CD ,Child Development
- CHIN ,Chinese
- CRP ,City and Regional Planning
- CE ,Civil Engineering
- COMS ,Communication Studies
- CPE ,Computer Engineering
- CSC ,Computer Science
- CM ,Construction Management
- DSCI ,Dairy Science
- DANC ,Dance
- DATA ,Data Science
- ESE ,Early Start English
- ESM ,Early Start Math
- ERSC ,Earth Science
- ECON ,Economics
- EDUC ,Education
- EE ,Electrical Engineering
- ENGR ,Engineering
- ENGL ,English
- EDES ,Environmental Design
- ENVE ,Environmental Engineering
- ES ,Ethnic Studies
- FPE ,Fire Protection Engineering
- FSN ,Food Science and Nutrition
- FR ,French
- GEOG ,Geography
- GEOL ,Geology
- GER ,German
- GS ,Graduate Studies
- GSA ,Graduate Studies Accounting
- GSB ,Graduate Studies Business
- GSE ,Graduate Studies Economics
- GSP ,Graduate Studies Packaging
- GRC ,Graphic Communication
- HLTH ,Health
- HIST ,History
- HNRC ,Honors Contract
- HNRS ,Honors
- IME ,Industrial and Manufacturing Engineering
- ITP ,Industrial Technology and Packaging
- ISLA ,Interdisciplinary Studies in Liberal Arts
- ITAL ,Italian
- JPNS ,Japanese
- JOUR ,Journalism
- KINE ,Kinesiology
- LA ,Landscape Architecture
- LAES ,Liberal Arts and Engineering Studies
- LS ,Liberal Studies
- MSCI ,Marine Science
- MATE ,Materials Engineering
- MATH ,Mathematics
- ME ,Mechanical Engineering
- MCRO ,Microbiology
- MSL ,Military Science Leadership
- MU ,Music
- NR ,Natural Resources
- PHIL ,Philosophy
- PEM ,Physical Education Men
- PEW ,Physical Education Women
- PSC ,Physical Science
- PHYS ,Physics
- POLS ,Political Science
- PSY ,Psychology
- RPTA ,Recreation Parks and Tourism Administration
- RELS ,Religious Studies
- SCM ,Science and Mathematics
- SOCS ,Social Sciences
- SOC ,Sociology
- SS ,Soil Science
- SPAN ,Spanish
- STAT ,Statistics
- SIE ,Systems Integration Engineering
- TH ,Theatre
- UNIV ,University Studies
- WVIT ,Wine and Viticulture
- WGS ,Womens and Gender Studies
- WLC ,World Languages and Cultures
+AERO,Aerospace Engineering
+AGB,Agribusiness
+AEPS,Agricultural and Environmental Plant Sciences
+AGC,Agricultural Communication
+AGED,Agricultural Education
+AG,Agriculture
+ASCI,Animal Science
+ANT,Anthropology
+ARCE,Architectural Engineering
+ARCH,Architecture
+ART,Art
+ASTR,Astronomy and Astrophysics
+BIO,Biology
+BMED,Biomedical Engineering
+BRAE,Bioresource and Agricultural Engineering
+BOT,Botany
+BUS,Business
+CHEM,Chemistry
+CD,Child Development
+CHIN,Chinese
+CRP,City and Regional Planning
+CE,Civil Engineering
+COMS,Communication Studies
+CPE,Computer Engineering
+CSC,Computer Science
+CM,Construction Management
+DSCI,Dairy Science
+DANC,Dance
+DATA,Data Science
+ESE,Early Start English
+ESM,Early Start Math
+ERSC,Earth Science
+ECON,Economics
+EDUC,Education
+EE,Electrical Engineering
+ENGR,Engineering
+ENGL,English
+EDES,Environmental Design
+ENVE,Environmental Engineering
+ES,Ethnic Studies
+FPE,Fire Protection Engineering
+FSN,Food Science and Nutrition
+FR,French
+GEOG,Geography
+GEOL,Geology
+GER,German
+GS,Graduate Studies
+GSA,Graduate Studies Accounting
+GSB,Graduate Studies Business
+GSE,Graduate Studies Economics
+GSP,Graduate Studies Packaging
+GRC,Graphic Communication
+HLTH,Health
+HIST,History
+HNRC,Honors Contract
+HNRS,Honors
+IME,Industrial and Manufacturing Engineering
+ITP,Industrial Technology and Packaging
+ISLA,Interdisciplinary Studies in Liberal Arts
+ITAL,Italian
+JPNS,Japanese
+JOUR,Journalism
+KINE,Kinesiology
+LA,Landscape Architecture
+LAES,Liberal Arts and Engineering Studies
+LS,Liberal Studies
+MSCI,Marine Science
+MATE,Materials Engineering
+MATH,Mathematics
+ME,Mechanical Engineering
+MCRO,Microbiology
+MSL,Military Science Leadership
+MU,Music
+NR,Natural Resources
+PHIL,Philosophy
+PEM,Physical Education Men
+PEW,Physical Education Women
+PSC,Physical Science
+PHYS,Physics
+POLS,Political Science
+PSY,Psychology
+RPTA,Recreation Parks and Tourism Administration
+RELS,Religious Studies
+SCM,Science and Mathematics
+SOCS,Social Sciences
+SOC,Sociology
+SS,Soil Science
+SPAN,Spanish
+STAT,Statistics
+SIE,Systems Integration Engineering
+TH,Theatre
+UNIV,University Studies
+WVIT,Wine and Viticulture
+WGS,Womens and Gender Studies
+WLC,World Languages and Cultures

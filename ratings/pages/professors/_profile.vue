@@ -19,7 +19,6 @@
 
 <script>
 import axios from 'axios'
-import Gpa from '~/components/stats/Gpa'
 import Review from '~/components/Review'
 import NewReview from '~/components/NewReview'
 import gradeToGpa from '~/mixins/gradeToGpa.js'

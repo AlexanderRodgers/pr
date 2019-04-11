@@ -49,6 +49,9 @@ class ProfessorSerializer(serializers.ModelSerializer):
     # gpa = serializers.SerializerMethodField()
 
     def create(self, validated_data):
+        if type(validated_data) is not dict:
+            print('data is not a dict.')
+            validated_data = validated_data.dict()
         print('validated data', validated_data)
         if 'major' in validated_data.keys():
             major_id = validated_data.pop('major')

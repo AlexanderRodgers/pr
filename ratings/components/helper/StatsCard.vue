@@ -1,19 +1,14 @@
 <template>
     <v-card
         class="stats-card"
+        color="green"
     >
         <card-image
             mainIcon="show_chart"
         />
-        <div class="text-xs-right card-text">
-            <p
-                class="category grey--text font-weight-light"
-            />
-            <h3
-                class="title display-1 font-weight-light">
-                My Value <small>Smaller value</small>
-            </h3>
-        </div>
+        <v-card-title primary-title class="white--text">
+            <h3 class="headline">GPA</h3>
+        </v-card-title>
     </v-card>
 </template>
 
@@ -38,7 +33,7 @@ export default {
     padding: 10 10 0 0;
     position: absolute;
     top: 0;
-    right: 0;
+    right: 10;
     width: 100%;
 }
 

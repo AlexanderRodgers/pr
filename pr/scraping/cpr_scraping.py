@@ -138,9 +138,9 @@ def post_professor_from_file():
         for row in reader:
             response = requests.get(api_url + 'majors/' + slugify(row['major']))
             major_fk = int(response.json()['id'])
-            print(row['firstName'])
-            print(row['LastName'])
-            print(major_fk)
+            print(row['firstName'], type(row['firstName']))
+            print(row['LastName'], type(row['LastName']))
+            print(major_fk, type(major_fk))
             post_data = {
                 'first_name': row['firstName'],
                 'last_name': row['LastName'],

@@ -1,14 +1,20 @@
 <template>
-<div>
-    <!-- <gpa :gpa="gpa"/> -->
-    <div>
-        <h1>{{ data.first_name + " " + data.last_name }}</h1>
-        <new-review :professor="data" v-on:review-valid="addReview"/>
-        <review 
-            v-for="(review, ind) in data.reviews"
-            :key="review.id" :review="data.reviews[ind]"/>
-    </div>
-</div>
+    <v-container fluid>
+        <v-layout>
+            <v-flex>
+
+            </v-flex>
+        </v-layout>
+        <v-layout>
+            <v-flex>
+                <h1>{{ data.first_name + " " + data.last_name }}</h1>
+                <new-review :professor="data" v-on:review-valid="addReview"/>
+                <review 
+                    v-for="(review, ind) in data.reviews"
+                    :key="review.id" :review="data.reviews[ind]"/>
+            </v-flex>
+        </v-layout>
+    </v-container>
 </template>
 
 <script>

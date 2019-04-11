@@ -1,7 +1,15 @@
 <template>
     <v-form ref="form">
         <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
-        <v-btn slot="activator" color="primary" dark>New Review</v-btn>
+        <v-btn 
+            slot="activator"
+            color="primary"
+            dark
+            top
+            right
+            fab>
+                <v-icon>add</v-icon>
+        </v-btn>
             <v-card>
                 <v-toolbar dark color="primary">
                     <v-btn icon dark @click="dialog = false">

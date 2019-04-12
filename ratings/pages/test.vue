@@ -2,18 +2,18 @@
     <v-container>
         <v-layout>
             <v-flex xs3>
-                <info-card/>
+                <profile-info/>
             </v-flex>
         </v-layout>
     </v-container>
 </template>
 
 <script>
-import InfoCard from '~/components/stats/InfoCard'
+import ProfileInfo from '~/apps/profileInfo'
 export default {
 
     components: {
-        InfoCard,
+        ProfileInfo,
     }
 
 }

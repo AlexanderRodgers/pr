@@ -1,7 +1,13 @@
 <template>
     <div>
-        <info-header mVal="3.5" mHeader="GPA" mSubheader="mostly positive" bgColor="green" />
-        <subheader subheadingImage="trending_up" subheading="Trending upwards"/>
+        <info-header 
+            :mVal="stats.mVal"
+            :mHeader="stats.mHeader"
+            :mSubheader="stats.mSubheader"
+            :bgColor="stats.bgColor" />
+        <subheader 
+            :subheadingImage="stats.subheadingImage"
+            :subheading="stats.subheading"/>
     </div>
 </template>
 
@@ -12,6 +18,13 @@ export default {
     components: {
         InfoHeader,
         Subheader
+    },
+
+    props: {
+        stats: {
+            Type: Object,
+            required: true,
+        }
     },
 
     mounted() {

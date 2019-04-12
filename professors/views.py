@@ -134,7 +134,7 @@ def professor_detail_id(request, pk):
         return Response(status=status.HTTP_404_NOT_FOUND)
 
     if (request.method == 'GET'):
-        serializer = ProfessorSerializer(professor)
+        serializer = GetProfessorSerializer(professor)
         return Response(serializer.data)
 
     elif (request.method == 'POST'):

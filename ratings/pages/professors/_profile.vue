@@ -2,7 +2,7 @@
     <v-container fluid>
         <v-layout>
             <v-flex>
-
+                <profile-info :profile="data"></profile-info>
             </v-flex>
         </v-layout>
         <v-layout>
@@ -22,13 +22,14 @@ import axios from 'axios'
 import Review from '~/components/Review'
 import NewReview from '~/components/NewReview'
 import gradeToGpa from '~/mixins/gradeToGpa.js'
+import ProfileInfo from '~/apps/ProfileInfo'
 
 export default {
 
     components: {
-        Gpa,
         Review,
         NewReview,
+        ProfileInfo
     },
 
     mixins: [gradeToGpa],

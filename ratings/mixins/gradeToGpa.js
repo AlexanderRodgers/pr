@@ -9,5 +9,11 @@ export default {
                 'F': 0.0
             }
         }
+    },
+
+    methods: {
+        convertToGpa(grade) {
+            return this.gradeToGpa(grade)
+        }
     }
 }

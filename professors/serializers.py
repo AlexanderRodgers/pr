@@ -70,23 +70,6 @@ class ProfessorSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-    def get_gpa(self, obj):
-        print(obj)
-        queryset = Review.objects.filter(professor__first_name=obj['first_name'])
-        grade_points = { 
-            'A+': 4.1, 'A': 4.0, 'A-': 3.7,
-            'B+': 3.33, 'B': 3, 'B-': 2.7,
-            'C+': 2.3, 'C': 2.0, 'C-': 1.7,
-            'D+': 1.3, 'D': 1.0, 'D-': 0.7,
-            'F': 0,
-        }
-        weightings = []
-        for review in queryset.values('rating'):
-            weightings.append(grade_points[review['rating']])
-        if len(weightings) != 0:
-            return sum(weightings) / len(weightings)
-        return -1
-
     class Meta:
         model = Professor
         fields = ('id', 'first_name', 'last_name', 'slug','email', 'major', 'reviews')
@@ -113,7 +96,7 @@ class GetProfessorSerializer(serializers.ModelSerializer):
         return instance
 
     def get_gpa(self, obj):
-        queryset = Review.objects.filter(professor__first_name=obj.first_name)
+        queryset = Review.objects.filter(professor__id=obj.id)
         grade_points = { 
             'A+': 4.1, 'A': 4.0, 'A-': 3.7,
             'B+': 3.33, 'B': 3, 'B-': 2.7,

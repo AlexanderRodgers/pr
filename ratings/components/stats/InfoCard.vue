@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div v-if="loaded">
         <info-header 
-            :mVal="stats.mVal"
-            :mHeader="stats.mHeader"
-            :mSubheader="stats.mSubheader"
-            :bgColor="stats.bgColor" />
+            :m-val="stats.mVal"
+            :m-header="stats.mHeader"
+            :m-subheader="stats.mSubheader"
+            :bg-color="stats.bgColor" />
         <subheader 
-            :subheadingImage="stats.subheadingImage"
+            :subheading-image="stats.subheadingImage"
             :subheading="stats.subheading"/>
     </div>
 </template>
@@ -20,6 +20,12 @@ export default {
         Subheader
     },
 
+    data() {
+        return {
+            loaded: false,
+        }
+    },
+
     props: {
         stats: {
             Type: Object,
@@ -28,13 +34,7 @@ export default {
     },
 
     mounted() {
-    //   if(this.gpa < 3.0) {
-    //      this.subheading = 'Mostly Negative'
-    //      this.color = 'red'
-    //   } else {
-    //      this.subheading = 'Mostly Positive'
-    //      this.color = 'green'
-    //   }
+        this.loaded = true
    }
 }
 </script>

@@ -2,11 +2,9 @@
     <v-container>
         <v-layout>
             <v-flex xs3>
-                {{ profile }}
                 <info-card :stats="stats"></info-card>
             </v-flex>
             <v-flex>
-
             </v-flex>
         </v-layout>
     </v-container>

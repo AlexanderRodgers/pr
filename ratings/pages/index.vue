@@ -41,6 +41,7 @@ export default {
   data() {
     return {
       professors: [],
+      majors: [],
       newPost: {},
       updateList: false,
       snackbarResponse: '',
@@ -54,7 +55,6 @@ export default {
   },
 
   methods: {
-
     updateProfs(newProf) {
       // Most likely need to make professors some sort of computed property to show changes. I can't figure it out at this moment.
       if (Object.entries(newProf).length === 0 && newProf.constructor === Object) {
@@ -74,15 +74,16 @@ export default {
   },
 
   mounted() {
+    MajorApi.getMajors()
+      .then(res => {
+        this.majors = res
+      })
 		let preCompProfessors = []
 		ProfessorApi.getCompiledProfs()
 			.then(res => {
 				for (let prof of res) {
 					if (prof.major != null) {
-						MajorApi.getMajor(prof['major'])
-							.then(res => {
-								prof['major_stats'] = res
-							})
+            prof['major_stats'] = this.majors.find(major => major.id === prof.id)
 					}
 					preCompProfessors.push(prof)
 				}

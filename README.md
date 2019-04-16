@@ -41,3 +41,12 @@ That means those with skills in UI/UX design, Database Design/SQL Programming, a
 - [ ] Creation of a global ranking of all professors.
 - [ ] Only allow certain users to make DELETE requests.
 - [ ] Development of chrome extension to replace passtheplebs.
+
+# FAQ
+
+### Q. Why are you creating another polyratings site?
+A. Though calpolyratings is much needed improvement to the old polyratings site, both sites do not do the following:
+1. Provide continuous cross site synchronization (A rating uploaded to one site would be reflected in both).
+2. There is no public API for students to use.
+This website aims to provide solutions for both. By allowing students to use this data for whatever projects they have, it saves a lot of time that students would have spent scraping both websites.
+

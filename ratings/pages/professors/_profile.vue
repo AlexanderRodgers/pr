@@ -1,5 +1,9 @@
 <template>
     <v-container fluid>
+        <v-layout row>
+            <h1>{{ data.first_name + " " + data.last_name }}</h1>
+            <new-review :professor="data" v-on:review-valid="addReview"/>
+        </v-layout>
         <v-layout>
             <v-flex>
                 <profile-info :profile="data"></profile-info>
@@ -8,7 +12,6 @@
         <v-layout>
             <v-flex>
                 <h1>{{ data.first_name + " " + data.last_name }}</h1>
-                <new-review :professor="data" v-on:review-valid="addReview"/>
                 <review 
                     v-for="(review, ind) in data.reviews"
                     :key="review.id" :review="data.reviews[ind]"/>

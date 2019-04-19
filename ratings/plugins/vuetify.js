@@ -10,6 +10,7 @@ Vue.use(Vuetify, {
     warning: '#FFEA00', // 'yellow accent-3'
     bad: '#B71C1C', // red darken-4
     neutral: '#546E7A', //blue-gray darken-1
+    background: '#66BB6A',
   },
 })
 

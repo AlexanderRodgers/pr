@@ -2,9 +2,8 @@
    <v-container>
       <v-layout>
          <v-flex xs3 md3>
-            <v-card>
+            <v-card class="background review-info">
                <v-card-text>
-                  User: {{ review.user }} <br/>
                   Professor Rating: {{ review.rating}} <br/>
                   {{ review.major }} {{ review.class_num }}  <br/>
                   Class Grade: {{ review.class_grade }} <br/>
@@ -14,8 +13,10 @@
             </v-card>
          </v-flex>
          <v-flex d-flex>
-            <v-card>
+            <v-card class="background">
                <v-card-text>
+                  <h4>{{ review.user }} <span style="float:right;">Professor Rating {{ review.rating }}</span></h4>
+                  <v-divider/>
                   {{review.review}}
                </v-card-text>
             </v-card>
@@ -52,6 +53,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.review-info {
+   margin-right: 5px;
+}
 
 </style>

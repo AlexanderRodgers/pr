@@ -31,6 +31,7 @@ export default {
     data() {
         return {
             stats: {},
+            
         }
     },
 
@@ -76,6 +77,10 @@ export default {
                 }
 
             }
+        },
+
+        setupNumReviews() {
+            let numReviews = this.profile.reviews.length
         }
     },
 

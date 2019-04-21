@@ -4,7 +4,6 @@
          <v-flex xs3 md3>
             <v-card class="background review-info">
                <v-card-text>
-                  Professor Rating: {{ review.rating}} <br/>
                   {{ review.major }} {{ review.class_num }}  <br/>
                   Class Grade: {{ review.class_grade }} <br/>
                   Class Difficulty: {{ review.difficulty }} <br/>
@@ -15,7 +14,7 @@
          <v-flex d-flex>
             <v-card class="background">
                <v-card-text>
-                  <h4>{{ review.user }} <span style="float:right;">Professor Rating {{ review.rating }}</span></h4>
+                  <h4>{{ review.user }} <span style="float:right;">{{ review.rating }}</span></h4>
                   <v-divider/>
                   {{review.review}}
                </v-card-text>

@@ -1,17 +1,16 @@
 <template>
     <v-container fluid>
-        <v-layout row>
-            <h1>{{ data.first_name + " " + data.last_name }}</h1>
-            <new-review :professor="data" v-on:review-valid="addReview"/>
+        <v-layout row align-center class="flex-container">
+            <span class="flex-item"><h1>{{ data.first_name + " " + data.last_name }}</h1></span>
+            <span class="flex-item"><new-review :professor="data" v-on:review-valid="addReview"/></span>
         </v-layout>
-        <v-layout>
+        <!-- <v-layout>
             <v-flex>
                 <profile-info :profile="data"></profile-info>
             </v-flex>
-        </v-layout>
+        </v-layout> -->
         <v-layout>
             <v-flex>
-                <h1>{{ data.first_name + " " + data.last_name }}</h1>
                 <review 
                     v-for="(review, ind) in data.reviews"
                     :key="review.id" :review="data.reviews[ind]"/>
@@ -53,11 +52,11 @@ export default {
     async asyncData({ params, error, payload }) {
         if (payload) return { data: payload }
         else return axios.get(`http://localhost:8000/api/professors/${params.profile}`)
-        .then(res => {
+        .then(res => {  
             return { data: res.data }
         })
         .catch(e => {
-            console.error(e)
+            error({statusCode: 404, message: 'Professor not found.'})
         })
     },
 
@@ -76,7 +75,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.flex-container {
+  display: flex;
+}
+
+.flex-item:nth-of-type(1) {
+  flex-grow: 2 !important;
+}
 
 </style>
    

@@ -2,7 +2,8 @@
     <v-container fluid>
         <v-layout row align-center class="flex-container">
             <span class="flex-item"><h1>{{ data.first_name + " " + data.last_name }}</h1></span>
-            <span class="flex-item"><new-review :professor="data" v-on:review-valid="addReview"/></span>
+            <span class="flex-item" style="float:left;"><new-review :professor="data" v-on:review-valid="addReview"/></span>
+            <prof-filter :selection="filterProfs"/>
         </v-layout>
         <!-- <v-layout>
             <v-flex>
@@ -25,13 +26,15 @@ import Review from '~/components/Review'
 import NewReview from '~/components/NewReview'
 import gradeToGpa from '~/mixins/gradeToGpa.js'
 import ProfileInfo from '~/apps/ProfileInfo'
+import ProfFilter from '~/components/ProfFilter'
 
 export default {
 
     components: {
         Review,
         NewReview,
-        ProfileInfo
+        ProfileInfo,
+        ProfFilter,
     },
 
     mixins: [gradeToGpa],
@@ -47,6 +50,11 @@ export default {
         addReview(newReview) {
             this.data.reviews.push(newReview)
         },
+
+        filterProfs(filterId) {
+            console.log('received')
+            console.log('received event', filterId)
+        }
     },
 
     async asyncData({ params, error, payload }) {

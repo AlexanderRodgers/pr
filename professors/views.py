@@ -29,7 +29,7 @@ def captcha_verificatiton(request):
         print(serializer.errors)    
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST'])
 def professor_list(request):
 
     if (request.method == 'GET'):
@@ -45,12 +45,12 @@ def professor_list(request):
         print('data invalid?')
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif (request.method == 'DELETE'):
-        for professor in Professor.objects.all():
-            professor.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    # elif (request.method == 'DELETE'):
+    #     for professor in Professor.objects.all():
+    #         professor.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET', 'POST', 'DELETE'])
+@api_view(['GET', 'POST'])
 def major_list(request):
 
     if (request.method == 'GET'):
@@ -65,10 +65,10 @@ def major_list(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.erros, status=status.HTTP_400_BAD_REQUEST)
 
-    elif (request.method == 'DELETE'):
-        for majors in Major.objects.all():
-            majors.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    # elif (request.method == 'DELETE'):
+    #     for majors in Major.objects.all():
+    #         majors.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 @api_view(['GET', 'POST'])

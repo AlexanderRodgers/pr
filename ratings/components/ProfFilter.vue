@@ -25,14 +25,17 @@
 
 <script>
   export default {
-    data: () => ({
-      items: [
-        { id: 1, title: 'Professor Rating' },
-        { id: 2, title: 'Difficulty' },
-        { id: 3, title: 'Class' },
-      ],
-      filterSelection: '',
-    }),
+
+    data() {
+      return {
+        items: [
+          { id: 1, title: 'Professor Rating' },
+          { id: 2, title: 'Difficulty' },
+          { id: 3, title: 'Class Number' },
+        ],
+        filterSelection: '',
+      }
+    }, 
 
     methods: {
         

@@ -3,7 +3,7 @@
         <v-layout row align-center class="flex-container">
             <span class="flex-item"><h1>{{ data.first_name + " " + data.last_name }}</h1></span>
             <span class="flex-item" style="float:left;"><new-review :professor="data" v-on:review-valid="addReview"/></span>
-            <prof-filter :selection="filterProfs"/>
+            <prof-filter @selection="filterProfs"/>
         </v-layout>
         <!-- <v-layout>
             <v-flex>
@@ -43,6 +43,8 @@ export default {
         return {
             dev: 'http://localhost:8000/',
             gpa: 0,
+            filterSelection: 0,
+            inverseFilter: 1,
         }
     },
 
@@ -52,9 +54,42 @@ export default {
         },
 
         filterProfs(filterId) {
-            console.log('received')
-            console.log('received event', filterId)
+            console.log(filterId)
+            if (this.filterSelection !== filterId) {
+                switch(filterId) {
+                    case 1:
+                        this.filterByRating()
+                        break
+                    case 2:
+                        this.filterByDifficulty()
+                        break
+                    case 3:
+                        this.filterByClass()
+                        break
+                    default:
+                        console.log('error')
+                }
+            } 
+        },
+
+        filterByRating() {
+            this.data.reviews.sort((a, b) => {
+                return this.inverseFilter * (this.gradeToGpa[b.rating] - this.gradeToGpa[a.rating])
+            })
+        },
+
+        filterByDifficulty() {
+            this.data.reviews.sort((a, b) => {
+                return this.inverseFilter * (a.difficulty - b.difficulty)
+            })
+        },
+
+        filterByClass() {
+            this.data.reviews.sort((a, b) => {
+                return this.inverseFilter * (a.class_num - b.class_num)
+            })
         }
+
     },
 
     async asyncData({ params, error, payload }) {

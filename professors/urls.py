@@ -11,4 +11,5 @@ urlpatterns = [
     path('reviews/', views.review_list),
     path('reviews/<int:pk>/', views.professor_review),
     path('verification/', views.captcha_verificatiton),
+    path('stats/professors/latest', views.latest_professor_list)
 ]

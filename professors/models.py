@@ -22,6 +22,7 @@ class Professor(models.Model):
     first_name = models.CharField(max_length=200)
     last_name = models.CharField(max_length=200)
     email = models.EmailField(null=True)
+    created = models.DateField(auto_now_add=True)
     major = models.ForeignKey(Major, null=True, on_delete=models.CASCADE)
     slug = models.SlugField(max_length=100, default='')
 

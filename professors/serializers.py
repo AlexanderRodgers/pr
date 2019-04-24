@@ -42,7 +42,7 @@ class ReviewSerializer(serializers.ModelSerializer):
         model = Review
         fields = ('id', 'rating', 'class_grade', 'difficulty', 'class_num', 'major', 'created',
         'user', 'review', 'quarter', 'professor')
-
+        
 class ProfessorSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(source='professors', many=True, required=False)
     major = serializers.PrimaryKeyRelatedField(required=False, read_only=True)

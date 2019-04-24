@@ -144,6 +144,13 @@ def professor_detail_id(request, pk):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET'])
+def latest_professor_list(request):
+    if (request.method == 'GET'):
+        reviews = Review.objects.order_by('-created', 'difficulty')
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
     
 @api_view(['GET'])
 def review_list(request):

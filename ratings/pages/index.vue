@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-layout row align-center class="flex-container">
-      <search :professors="professors" fluid class="flex-item"/>
+      <search :professors="professors" :loading="loading" fluid class="flex-item"/>
       <new-professor v-on:validated="updateProfs" class="flex-item"/>
     </v-layout>
     <v-snackbar
@@ -54,6 +54,12 @@ export default {
     }
   },
 
+  computed: {
+    loading() {
+      return this.professors.length > 0 ? false : true 
+    }
+  },
+
   methods: {
     updateProfs(newProf) {
       // Most likely need to make professors some sort of computed property to show changes. I can't figure it out at this moment.
@@ -89,7 +95,6 @@ export default {
 				}
 			})
 			.catch(e => console.log(e))
-		console.log(preCompProfessors)
 		this.professors = preCompProfessors
 	},
 }

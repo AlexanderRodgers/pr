@@ -7,6 +7,7 @@
 				append-icon="search"
 				item-text="first_last"
 				item-value="id"
+				:loading="loading"
 				:search-input.sync="search"
 				:rules="[searchValid(search)]"
 				@click:append="runSearch(search)"
@@ -62,6 +63,7 @@ export default {
 
 	props: {
 		professors: Array,
+		loading: Boolean
 	},
 
     // mixins: [profs],
@@ -70,6 +72,7 @@ export default {
         return { 
             search: '',
 			dev: 'http://localhost:8000/',
+            isLoading: true,
         }
 	},
 
@@ -101,6 +104,7 @@ export default {
                 : "That professor doesn't exist"
 		},
 		
+		// Will eventually run into conflicts unless id is used.
 		professorBySearch(search) {
 			for (let prof of this.professors) {
 				if (prof.first_last === search) {

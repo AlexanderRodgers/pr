@@ -123,8 +123,8 @@ export default {
   display: flex;
 }
 
-.flex-item:nth-of-type(1) {
-  flex-grow: 2 !important;
+.flex-item:nth-of-type(2) {
+  flex-grow: 1 !important;
 }
 
 </style>

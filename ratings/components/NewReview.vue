@@ -5,6 +5,7 @@
             slot="activator"
             color="primary"
             dark
+            small
             fab>
                 <v-icon>add</v-icon>
         </v-btn>

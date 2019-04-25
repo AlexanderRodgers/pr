@@ -1,4 +1,5 @@
 from django.urls import path
+from professors.generic_view import ProfessorQuery
 from . import views
 
 urlpatterns = [
@@ -11,5 +12,5 @@ urlpatterns = [
     path('reviews/', views.review_list),
     path('reviews/<int:pk>/', views.professor_review),
     path('verification/', views.captcha_verificatiton),
-    path('stats/professors/latest', views.latest_professor_list)
+    path('stats/professors/latest', ProfessorQuery.as_view())
 ]

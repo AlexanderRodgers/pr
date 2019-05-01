@@ -155,4 +155,4 @@ def post_professor_from_file():
 # get_num_pages()
 # scrape_professors()
 # gender_studies()
-post_professor_from_file()
+# post_professor_from_file()

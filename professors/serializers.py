@@ -16,7 +16,7 @@ class MajorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Major
-        fields = ('__all__')
+        fields = ('__all__')    
 
 class ReviewSerializer(serializers.ModelSerializer):
     major = serializers.PrimaryKeyRelatedField(required=False, read_only=True)
